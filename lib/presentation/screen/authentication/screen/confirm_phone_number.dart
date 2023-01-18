@@ -30,6 +30,7 @@ class ConfrimPhoneNumber extends StatelessWidget {
           }
           if(state is PhoneOTPVerified){
             Navigator.pop(context);
+            showToast(text: AppConstant.phoneOTPVerified, state: ToastStates.SUCCESS);
             navigatorAndRemove(context, FirstStepRegisterScreen(phoneNumber: phoneNumber,));
           }
           if(state is ErrorOccurred){

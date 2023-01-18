@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:social_app/business_logic/authentication_logic/states.dart';
 import 'package:social_app/data/model/authentication/create_user.dart';
+import 'package:social_app/util/sharedpreference.dart';
 
 class AuthCubit extends Cubit<AuthStates> {
   AuthCubit() : super(AuthInitialStates());
@@ -45,16 +46,15 @@ class AuthCubit extends Cubit<AuthStates> {
     emit(ShowAndHideRegisterConfirmPassword());
   }
 
-  void userRegister(
-      {required String email,
-      required String password,
-      required String confirmPassword,
-      required String city,
-      required String area,
-      required String location,
-      required String address,
-      required String phoneNumber,
-      required String name}) {
+  void userRegister({required String email,
+    required String password,
+    required String confirmPassword,
+    required String city,
+    required String area,
+    required String location,
+    required String address,
+    required String phoneNumber,
+    required String name}) {
     emit(UserRegisterLoadingStates());
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password)
@@ -78,15 +78,14 @@ class AuthCubit extends Cubit<AuthStates> {
     });
   }
 
-  void createUser(
-      {required String email,
-      required String city,
-      required String area,
-      required String location,
-      required String address,
-      required String phoneNumber,
-      required String name,
-      required String uId}) {
+  void createUser({required String email,
+    required String city,
+    required String area,
+    required String location,
+    required String address,
+    required String phoneNumber,
+    required String name,
+    required String uId}) {
     CreateUser model = CreateUser(
       name: name,
       email: email,
@@ -183,17 +182,19 @@ class AuthCubit extends Cubit<AuthStates> {
   Future<UserCredential> signInWithGoogle() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+    await googleUser?.authentication;
     final credentialGoogle = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-    print('saaaaaaaaaaaaaaaaaaa');
-    print(googleAuth?.accessToken);
-    print(googleUser?.email);
-    print(googleUser?.displayName);
-    print(googleUser?.serverAuthCode);
-    print(googleUser?.photoUrl);
+    CacheHelper.saveData(key: "tokenGoogle", value: googleAuth?.accessToken);
+    // print('saaaaaaaaaaaaaaaaaaa');
+    // print(googleAuth?.accessToken);
+    // print(googleAuth?.idToken);
+    // print(googleUser?.email);
+    // print(googleUser?.displayName);
+    // print(googleUser?.serverAuthCode);
+    // print(googleUser?.photoUrl);
     return await FirebaseAuth.instance.signInWithCredential(credentialGoogle);
   }
 

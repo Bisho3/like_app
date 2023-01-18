@@ -45,7 +45,9 @@ class NoInternetScreen extends StatelessWidget {
               height: 1.h,
             ),
             CustomMaterialButton(
-              function: () {},
+              function: () {
+                const Center(child: RefreshProgressIndicator());
+              },
               text: AppConstant.tryAgain,
               radius: 10.r,
               width: 180.w,

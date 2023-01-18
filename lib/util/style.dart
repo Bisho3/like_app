@@ -18,4 +18,5 @@ class MyColors {
   static const Color hintTextColor = Color(0xffCCCCCC);
   static const Color blueColor = Color(0xff3D4F9E);
   static const Color secondaryRedColor = Color(0xffF15A24);
+  static const Color yellowColor = Colors.yellow;
 }

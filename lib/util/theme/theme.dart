@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:social_app/util/style.dart';
 
 ThemeData lightTheme = ThemeData(
@@ -30,14 +31,14 @@ ThemeData lightTheme = ThemeData(
     elevation: 20.0,
     backgroundColor: MyColors.whiteColor,
   ),
-  textTheme: const TextTheme(
+  textTheme:  TextTheme(
     bodyText1: TextStyle(
-      fontSize: 18.0,
+      fontSize: 18.sp,
       fontWeight: FontWeight.w600,
       color: MyColors.blackColor,
     ),
     subtitle1: TextStyle(
-      fontSize: 14.0,
+      fontSize: 14.sp,
       fontWeight: FontWeight.w600,
       color: MyColors.blackColor,
       height: 1.3,

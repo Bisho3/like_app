@@ -54,5 +54,22 @@
   "success_Create_User": "You can login now",
   "no_Internet": "The internet is offline",
   "no_Internet_Status": "Please check your internet and make sure the network is ready to work",
-  "try_Again":"Try again"
+  "try_Again":"Try again",
+  "home": "Home",
+  "chats": "Chats",
+  "users": "users",
+  "settings": "Settings",
+  "upload_Post": "New Post",
+  "homeBar": "Home",
+  "chatsBar": "Chats",
+  "usersBar": "users",
+  "settingsBar": "Settings",
+  "upload_PostBar": "New Post",
+  "communicate_With_Friends": "Communicate with feiends",
+  "comment": "Comment",
+  "write_Comment": "Write a comment.....",
+  "like": "Like",
+  "phone_OTP_Verified": "The phone number has been verified. Continue to register",
+  "phone_Number_Submit": "The OTP has been sent to your phone number",
+  "login_Success": "Welcome to the like Application. You have logged in successfully"
 }

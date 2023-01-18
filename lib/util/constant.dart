@@ -57,4 +57,17 @@ class AppConstant {
   static String noInternet ="no_Internet".tr();
   static String noInternetStatus ="no_Internet_Status".tr();
   static String tryAgain="try_Again".tr();
+  static String home = "home".tr();
+  static String chats = "chats".tr();
+  static String users = "users".tr();
+  static String settings = "settings".tr();
+  static String uploadPost = "upload_Post".tr();
+  static String homeBar = "homeBar".tr();
+  static  String communicateWithFriends ="communicate_With_Friends".tr();
+  static String comment ="comment".tr();
+  static String writeComment="write_Comment".tr();
+  static String like ="like".tr();
+  static String phoneOTPVerified ="phone_OTP_Verified".tr();
+  static String phoneNumberSubmit ="phone_Number_Submit".tr();
+  static String loginSuccess ="login_Success".tr();
 }

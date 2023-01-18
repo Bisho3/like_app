@@ -54,5 +54,22 @@
   "success_Create_User": "يمكنك تسجيل الدخول الآن",
   "no_Internet": "الأنترنت غير متصل",
   "no_Internet_Status": "برجاء مراجعة شبكة الأنترنت الخاصة بك \nو التأكد من جاهزية الشبكة للعمل",
-  "try_Again":"حاول مرة أخرى"
+  "try_Again":"حاول مرة أخرى",
+  "home": "الرئيسية",
+  "chats": "المحادثات",
+  "users": "المستخدمين",
+  "settings": "الأعدادات",
+  "upload_Post": "منشور جديد",
+  "homeBar": "الصفحة الرئيسية",
+  "chatsBar": "المحادثات",
+  "usersBar": "المستخدمين",
+  "settingsBar": "الأعدادات",
+  "upload_PostBar": "منشور جديد",
+  "communicate_With_Friends": "تواصل مع الأصدقاء",
+  "comment": "تعليق",
+  "write_Comment": "أكتب تعليق.....",
+  "like": "أعجبني",
+  "phone_OTP_Verified": "تم التحقق من رقم الهاتف تابع التسجيل",
+  "phone_Number_Submit": "تم أرسال OTP علي رقم الهاتف الخاص بك",
+  "login_Success": "مرحبا بك في تطبيق Like. تم الدخول بنجاح"
 }

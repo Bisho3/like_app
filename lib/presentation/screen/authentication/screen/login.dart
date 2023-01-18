@@ -8,7 +8,7 @@ import 'package:social_app/business_logic/authentication_logic/cubit.dart';
 import 'package:social_app/business_logic/authentication_logic/states.dart';
 import 'package:social_app/presentation/screen/authentication/screen/otp_phone.dart';
 
-import 'package:social_app/presentation/screen/home/home_screen.dart';
+import 'package:social_app/presentation/screen/home/screen/home_screen.dart';
 import 'package:social_app/presentation/shared_widget/custom_form_field.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
 import 'package:social_app/presentation/shared_widget/custom_text_button.dart';
@@ -43,7 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         if (state is UserLoginSuccessStates) {
           CacheHelper.saveData(key: 'token', value: state.uId).then((value) {
-            navigatorAndRemove(context, HomeScreen());
+            showToast(text: AppConstant.loginSuccess, state: ToastStates.SUCCESS);
+            navigatorAndRemove(context, const HomeScreen());
           });
         }
       },
@@ -180,6 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             await  cubit.signInWithGoogle();
                             navigatorAndRemove(context, HomeScreen());
                           }),
+
                     ],
                   ),
                 ),

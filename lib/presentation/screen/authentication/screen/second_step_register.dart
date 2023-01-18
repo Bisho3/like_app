@@ -8,7 +8,7 @@ import 'package:social_app/presentation/screen/authentication/screen/login.dart'
 import 'package:social_app/presentation/screen/authentication/widget/drop_down.dart';
 import 'package:social_app/presentation/screen/authentication/widget/location.dart';
 import 'package:social_app/presentation/screen/authentication/widget/text_register_bar.dart';
-import 'package:social_app/presentation/screen/home/home_screen.dart';
+import 'package:social_app/presentation/screen/home/screen/home_screen.dart';
 import 'package:social_app/presentation/shared_widget/custom_form_field.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
 import 'package:social_app/util/constant.dart';

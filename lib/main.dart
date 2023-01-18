@@ -8,7 +8,7 @@ import 'package:social_app/business_logic/authentication_logic/cubit.dart';
 import 'package:social_app/business_logic/home_logic/cubit.dart';
 import 'package:social_app/business_logic/home_logic/states.dart';
 import 'package:social_app/presentation/screen/authentication/screen/login.dart';
-import 'package:social_app/presentation/screen/home/home_screen.dart';
+import 'package:social_app/presentation/screen/home/screen/home_screen.dart';
 import 'package:social_app/presentation/screen/no_internet/no_internet.dart';
 import 'package:social_app/presentation/screen/splash_screen_and_onboarding/screen/onboarding_screen.dart';
 import 'package:social_app/presentation/screen/splash_screen_and_onboarding/screen/splash_screen.dart';
@@ -26,14 +26,17 @@ void main() async {
   Widget widget;
   var onBoarding = CacheHelper.getData(key: 'onBoarding');
   var token = CacheHelper.getData(key: 'token');
+  var tokenGoogle = CacheHelper.getData(key: 'tokenGoogle');
   print("xxxxxxxx $onBoarding");
   print("xxxxxxxx $token");
+  print("bbbbbbbb ${tokenGoogle} ");
+
   if(onBoarding == null){
     widget = const OnBoardingScreen();
-  }else if(onBoarding != null && token == null){
+  }else if(onBoarding != null && token == null && tokenGoogle == null){
     widget = LoginScreen();
   }else{
-    widget = HomeScreen();
+    widget = const HomeScreen();
   }
 
   runApp(

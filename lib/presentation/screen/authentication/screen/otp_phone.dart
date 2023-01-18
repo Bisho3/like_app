@@ -24,16 +24,14 @@ class OtpPhoneScreen extends StatelessWidget {
     return BlocConsumer<AuthCubit, AuthStates>(
       listener: (context, state) {
         if(state is PhoneLoadingStates){
-          print("11111111111111");
           showProgressIndicator(context);
         }
         if(state is PhoneNumberSubmit){
-          print("2222222222222");
           Navigator.pop(context);
+          showToast(text: AppConstant.phoneNumberSubmit, state: ToastStates.SUCCESS);
           navigatorAndRemove(context, ConfrimPhoneNumber(phoneNumber: phoneNumberController.text,));
         }
         if(state is ErrorOccurred){
-          print("333333333333333333");
           Navigator.pop(context);
           String errorMsg = (state).error;
           showToast(text: errorMsg, state:ToastStates.WARMIMG);
