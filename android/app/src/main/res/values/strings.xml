@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">like_app</string>
+    <string name="fb_login_protocol_scheme">fb878531786906884</string>
+
+    <string name="facebook_app_id">878531786906884</string>
+    <string name="facebook_client_token">52ce7544b1d7e1d56c8a2e0b8e2ce04f</string>
+</resources>

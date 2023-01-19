@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:social_app/util/constant.dart';
+import 'package:social_app/util/strings.dart';
 
 
 BottomNavigationBarItem bottomNavBarItem ({

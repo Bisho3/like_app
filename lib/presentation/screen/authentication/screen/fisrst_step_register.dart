@@ -9,7 +9,7 @@ import 'package:social_app/presentation/screen/authentication/widget/text_regist
 import 'package:social_app/presentation/shared_widget/custom_form_field.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
 import 'package:social_app/presentation/shared_widget/custom_text_button.dart';
-import 'package:social_app/util/constant.dart';
+import 'package:social_app/util/strings.dart';
 import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/style.dart';
 
@@ -29,10 +29,10 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool notAccept = false;
   final passwordValidator = MultiValidator([
-    RequiredValidator(errorText: AppConstant.emptyPassword),
-    MinLengthValidator(8, errorText: AppConstant.minLengthValidationPassword),
+    RequiredValidator(errorText: MyStrings.emptyPassword),
+    MinLengthValidator(8, errorText: MyStrings.minLengthValidationPassword),
     PatternValidator(r'(?=.*?[#?!@$%^&*-])',
-        errorText: AppConstant.patternValidationPassword)
+        errorText: MyStrings.patternValidationPassword)
   ]);
 
   @override
@@ -48,7 +48,7 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
               appBar: AppBar(
                 titleSpacing: 0.0,
                 title: CustomTextRegisterBar(
-                        text: AppConstant.firstStepRegister
+                        text: MyStrings.firstStepRegister
                     ),
               ),
               body: SingleChildScrollView(
@@ -59,11 +59,11 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
                     children: [
                       CustomFormField(
                         type: TextInputType.name,
-                        text: AppConstant.name,
+                        text: MyStrings.name,
                         controller: nameController,
                         validate: (value) {
                           if (value!.isEmpty) {
-                            return AppConstant.emptyName;
+                            return MyStrings.emptyName;
                           }
                           return null;
                         },
@@ -76,16 +76,16 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
                       ),
                       CustomFormField(
                         type: TextInputType.emailAddress,
-                        text: AppConstant.eMail,
+                        text: MyStrings.eMail,
                         controller: emailController,
                         validate: (value) {
                           if (value!.isEmpty) {
-                            return AppConstant.emptyEmail;
+                            return MyStrings.emptyEmail;
                           } else if (value.characters.contains("@") &&
                               value.characters.contains(".")) {
                             return null;
                           } else {
-                            return AppConstant.errorEmail;
+                            return MyStrings.errorEmail;
                           }
                         },
                         radius: 30.0,
@@ -98,7 +98,7 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
                       ///=========== TextFormField For Password=====///
                       CustomFormField(
                         type: TextInputType.visiblePassword,
-                        text: AppConstant.password,
+                        text: MyStrings.password,
                         controller: passwordController,
                         validate: passwordValidator,
                         suffixIcon: cubit.suffixRegisterPassword,
@@ -116,15 +116,15 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
                       ///=========== TextFormField For Confirm Password=====///
                       CustomFormField(
                         type: TextInputType.visiblePassword,
-                        text: AppConstant.confirmPassword,
+                        text: MyStrings.confirmPassword,
                         controller: confirmPasswordController,
                         validate: (value) {
                           if (value!.isEmpty) {
-                            return AppConstant.emptyConfirmPassword;
+                            return MyStrings.emptyConfirmPassword;
                           }
                           if (passwordController.text !=
                               confirmPasswordController.text) {
-                            return AppConstant.passwordNotIdentical;
+                            return MyStrings.passwordNotIdentical;
                           }
                           return null;
                         },
@@ -164,7 +164,7 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
                             width: 1.w,
                           ),
                           Text(
-                            AppConstant.agree,
+                            MyStrings.agree,
                             style: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
@@ -173,10 +173,10 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
                           ),
                           CustomTextButton(
                               function: () {},
-                              text: AppConstant.termsAndCondition,
+                              text: MyStrings.termsAndCondition,
                               color: MyColors.primaryColor),
                           Text(
-                            AppConstant.and,
+                            MyStrings.and,
                             style: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
@@ -185,7 +185,7 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
                           ),
                           CustomTextButton(
                             function: () {},
-                            text: AppConstant.policies,
+                            text: MyStrings.policies,
                           ),
                         ],
                       ),
@@ -203,11 +203,11 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
                               ));
                             } else if (notAccept == false) {
                               showToast(
-                                  text: AppConstant.doNotAgreeTerms,
+                                  text: MyStrings.doNotAgreeTerms,
                                   state: ToastStates.WARMIMG);
                             }
                           },
-                          text: AppConstant.next,
+                          text: MyStrings.next,
                           radius: 10.0,
                           background: MyColors.primaryColor,
                           borderRadius: MyColors.primaryColor,

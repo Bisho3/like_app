@@ -12,7 +12,7 @@ import 'package:social_app/presentation/screen/home/screen/home_screen.dart';
 import 'package:social_app/presentation/shared_widget/custom_form_field.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
 import 'package:social_app/presentation/shared_widget/custom_text_button.dart';
-import 'package:social_app/util/constant.dart';
+import 'package:social_app/util/strings.dart';
 import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/images.dart';
 import 'package:social_app/util/sharedpreference.dart';
@@ -43,9 +43,19 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         if (state is UserLoginSuccessStates) {
           CacheHelper.saveData(key: 'token', value: state.uId).then((value) {
-            showToast(text: AppConstant.loginSuccess, state: ToastStates.SUCCESS);
+            AuthCubit.get(context).uIdToken = CacheHelper.getData(key: 'token');
+            showToast(text: MyStrings.loginSuccess, state: ToastStates.SUCCESS);
             navigatorAndRemove(context, const HomeScreen());
           });
+        }
+        if(state is FacebookSuccess){
+          navigatorAndRemove(context, const HomeScreen());
+          showToast(text: MyStrings.loginSuccess, state: ToastStates.SUCCESS);
+
+        }
+        if(state is GoogleSuccess){
+          navigatorAndRemove(context, const HomeScreen());
+          showToast(text: MyStrings.loginSuccess, state: ToastStates.SUCCESS);
         }
       },
       builder: (context, state) {
@@ -74,11 +84,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       CustomFormField(
                         type: TextInputType.emailAddress,
                         controller: emailcontroller,
-                        text: AppConstant.eMail,
+                        text: MyStrings.eMail,
                         preffixIcon: Icons.person_outline_sharp,
                         validate: (value) {
                           if (value!.isEmpty) {
-                            return AppConstant.emptyEmail;
+                            return MyStrings.emptyEmail;
                           }
                           return null;
                         },
@@ -92,11 +102,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       CustomFormField(
                         type: TextInputType.visiblePassword,
                         controller: passwordcontroller,
-                        text: AppConstant.password,
+                        text: MyStrings.password,
                         preffixIcon: Icons.lock_outline,
                         validate: (value) {
                           if (value!.isEmpty) {
-                            return AppConstant.emptyPassword;
+                            return MyStrings.emptyPassword;
                           }
                           return null;
                         },
@@ -124,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   );
                                 }
                               },
-                              text: AppConstant.signIn,
+                              text: MyStrings.signIn,
                               radius: 10.0,
                               background: MyColors.primaryColor,
                               borderRadius: MyColors.primaryColor,
@@ -142,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            AppConstant.doNotHaveAccount,
+                            MyStrings.doNotHaveAccount,
                             style: TextStyle(
                               color: MyColors.greyColor,
                               fontSize: 16.sp,
@@ -152,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               function: () {
                                 navigatorTo(context, OtpPhoneScreen());
                               },
-                              text: AppConstant.createAccountNow),
+                              text: MyStrings.createAccountNow),
                         ],
                       ),
                       Row(children: <Widget>[
@@ -161,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 10.w,
                         ),
                         Text(
-                          AppConstant.orContinueWith,
+                          MyStrings.orContinueWith,
                           style: TextStyle(color: Colors.grey, fontSize: 16.sp),
                         ),
                         SizedBox(
@@ -172,16 +182,28 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: 10.h,
                       ),
-                      IconButton(
-                          icon: FaIcon(
-                            FontAwesomeIcons.google,
-                            size: 25.sp,
-                          ),
-                          onPressed: () async{
-                            await  cubit.signInWithGoogle();
-                            navigatorAndRemove(context, HomeScreen());
-                          }),
-
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                              icon: FaIcon(
+                                FontAwesomeIcons.google,
+                                size: 25.sp,
+                              ),
+                              onPressed: () async{
+                                await  cubit.signInWithGoogle();
+                              }),
+                          IconButton(
+                              icon: FaIcon(
+                                FontAwesomeIcons.facebook,
+                                size: 25.sp,
+                              ),
+                              onPressed: () async{
+                                await  cubit.signInWithFacebook();
+                                // navigatorAndRemove(context, HomeScreen());
+                              }),
+                        ],
+                      ),
                     ],
                   ),
                 ),

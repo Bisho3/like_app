@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +12,7 @@ import 'package:social_app/presentation/screen/authentication/widget/text_regist
 import 'package:social_app/presentation/screen/home/screen/home_screen.dart';
 import 'package:social_app/presentation/shared_widget/custom_form_field.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
-import 'package:social_app/util/constant.dart';
+import 'package:social_app/util/strings.dart';
 import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/style.dart';
 
@@ -42,19 +43,25 @@ class _SecondStepRegisterScreenState extends State<SecondStepRegisterScreen> {
   TextEditingController locationController = TextEditingController();
 
   var formKey = GlobalKey<FormState>();
-  String initialCityValue = AppConstant.chooseCity;
-  String initialAreaValue = AppConstant.chooseArea;
-  List<String> listCity = [AppConstant.chooseCity, AppConstant.cairo];
-  List<String> listArea = [AppConstant.chooseArea, AppConstant.shoubraMasr];
+  String initialCityValue = MyStrings.chooseCity;
+  String initialAreaValue = MyStrings.chooseArea;
+  List<String> listCity = [MyStrings.chooseCity, MyStrings.cairo];
+  List<String> listArea = [MyStrings.chooseArea, MyStrings.shoubraMasr];
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthStates>(
       listener: (context, state) {
         if (state is CreateUserSuccessStates) {
-          navigatorAndRemove(context, LoginScreen());
-          showToast(
-              text: AppConstant.successCreateUser, state: ToastStates.SUCCESS);
+          alertDialog(
+              context: context,
+              textBody: MyStrings.successCreateUser,
+              dialogType: DialogType.success,
+              textButton: MyStrings.signIn,
+              function: (){
+                navigatorAndRemove(context, LoginScreen());
+              }
+          );
         }
         if (state is UserRegisterErrorStates) {
           showToast(text: state.error, state: ToastStates.ERROR);
@@ -72,7 +79,7 @@ class _SecondStepRegisterScreenState extends State<SecondStepRegisterScreen> {
               appBar: AppBar(
                 titleSpacing: 0.0,
                 title:    CustomTextRegisterBar(
-                    text: AppConstant.secondStepRegister
+                    text: MyStrings.secondStepRegister
                 ),
               ),
               body: Form(
@@ -102,12 +109,12 @@ class _SecondStepRegisterScreenState extends State<SecondStepRegisterScreen> {
                           height: 10.h,
                         ),
                         CustomFormField(
-                          text: AppConstant.address,
+                          text: MyStrings.address,
                           type: TextInputType.text,
                           controller: addressController,
                           validate: (value) {
                             if (value!.isEmpty) {
-                              return AppConstant.emptyAddress;
+                              return MyStrings.emptyAddress;
                             }
                             return null;
                           },
@@ -120,12 +127,12 @@ class _SecondStepRegisterScreenState extends State<SecondStepRegisterScreen> {
                         ),
                         ///======TextFormField For Location=====///
                         CustomFormField(
-                          text: AppConstant.location,
+                          text: MyStrings.location,
                           type: TextInputType.text,
                           controller: locationController,
                           validate: (value) {
                             if (value!.isEmpty) {
-                              return AppConstant.emptyLocation;
+                              return MyStrings.emptyLocation;
                             }
                             return null;
                           },
@@ -152,13 +159,13 @@ class _SecondStepRegisterScreenState extends State<SecondStepRegisterScreen> {
                                   if (initialCityValue == 'أختر المحافظة' ||
                                       initialCityValue == 'Choose the county') {
                                     showToast(
-                                        text: AppConstant.emptyCity,
+                                        text: MyStrings.emptyCity,
                                         state: ToastStates.WARMIMG);
                                   } else if (initialAreaValue ==
                                           "أختر المنطقة" ||
                                       initialAreaValue == 'Choose the region') {
                                     showToast(
-                                        text: AppConstant.emptyArea,
+                                        text: MyStrings.emptyArea,
                                         state: ToastStates.WARMIMG);
                                   } else {
                                     if (formKey.currentState!.validate()) {
@@ -176,7 +183,7 @@ class _SecondStepRegisterScreenState extends State<SecondStepRegisterScreen> {
                                     }
                                   }
                                 },
-                                text: AppConstant.completedRegistration,
+                                text: MyStrings.completedRegistration,
                                 // width: 50.w,
                                 background: MyColors.primaryColor,
                                 borderRadius: MyColors.primaryColor,

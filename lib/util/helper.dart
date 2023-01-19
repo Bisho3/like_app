@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -44,3 +45,27 @@ Color chooseToastColor(ToastStates state) {
   }
   return color;
 }
+
+AwesomeDialog alertDialog({
+  required BuildContext context,
+  required String textBody,
+  required DialogType dialogType,
+  required String textButton,
+  required Function function,
+})=> AwesomeDialog(
+  context: context,
+  animType: AnimType.scale,
+  dialogType: dialogType,
+  body: Center(
+    child: Text(
+    textBody,
+    style: Theme.of(context).textTheme.subtitle1?.copyWith(fontSize: 16.sp),
+  ),
+  ),
+    dismissOnTouchOutside: false,
+  btnOkOnPress: () {
+   function();
+  },
+  btnOkText: textButton
+)..show();
+

@@ -8,7 +8,7 @@ import 'package:social_app/presentation/screen/authentication/screen/confirm_pho
 import 'package:social_app/presentation/screen/authentication/widget/show_progress_phonenum.dart';
 import 'package:social_app/presentation/shared_widget/custom_form_field.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
-import 'package:social_app/util/constant.dart';
+import 'package:social_app/util/strings.dart';
 import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/images.dart';
 import 'package:social_app/util/style.dart';
@@ -28,7 +28,7 @@ class OtpPhoneScreen extends StatelessWidget {
         }
         if(state is PhoneNumberSubmit){
           Navigator.pop(context);
-          showToast(text: AppConstant.phoneNumberSubmit, state: ToastStates.SUCCESS);
+          showToast(text: MyStrings.phoneNumberSubmit, state: ToastStates.SUCCESS);
           navigatorAndRemove(context, ConfrimPhoneNumber(phoneNumber: phoneNumberController.text,));
         }
         if(state is ErrorOccurred){
@@ -57,22 +57,22 @@ class OtpPhoneScreen extends StatelessWidget {
                         controller: phoneNumberController,
                         validate: (value) {
                           if (value!.isEmpty) {
-                            return AppConstant.emptyPhoneNumber;
+                            return MyStrings.emptyPhoneNumber;
                           } else if (value.length < 11) {
-                            return AppConstant.lessValidatePhoneNumber;
+                            return MyStrings.lessValidatePhoneNumber;
                           } else if (value.length > 11) {
-                            return AppConstant.moreValidatePhoneNumber;
+                            return MyStrings.moreValidatePhoneNumber;
                           }
                           String check = value.substring(0, 3);
                           if (check != '010' &&
                               check != '012' &&
                               check != '011' &&
                               check != '015') {
-                            return AppConstant.errorPhoneNumber;
+                            return MyStrings.errorPhoneNumber;
                           }
                           return null;
                         },
-                        text: AppConstant.phoneNumber,
+                        text: MyStrings.phoneNumber,
                         onTap: (){},
                         preffixIcon: Icons.phone),
                     SizedBox(
@@ -89,7 +89,7 @@ class OtpPhoneScreen extends StatelessWidget {
                             return;
                           }
                         },
-                        text: AppConstant.register,
+                        text: MyStrings.register,
                         radius: 10.r),
                   ],
                 ),

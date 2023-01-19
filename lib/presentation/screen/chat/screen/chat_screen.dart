@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:social_app/util/constant.dart';
+import 'package:social_app/util/strings.dart';
 
 class ChatsScreen extends StatelessWidget {
   const ChatsScreen({Key? key}) : super(key: key);
@@ -8,7 +8,7 @@ class ChatsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppConstant.chats),
+        title: Text(MyStrings.chats),
       ),
       body: Column(
         children: [

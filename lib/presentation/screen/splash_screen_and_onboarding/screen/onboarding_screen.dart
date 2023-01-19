@@ -7,7 +7,7 @@ import 'package:social_app/presentation/screen/authentication/screen/login.dart'
 import 'package:social_app/presentation/screen/splash_screen_and_onboarding/widget/custom_onboarding_item.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
 import 'package:social_app/presentation/shared_widget/custom_text_button.dart';
-import 'package:social_app/util/constant.dart';
+import 'package:social_app/util/strings.dart';
 import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/images.dart';
 import 'package:social_app/util/sharedpreference.dart';
@@ -24,18 +24,18 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   List<BoardingModel> boarding = [
     BoardingModel(
       image: MyImages.firstImageOnBoarding,
-      title: AppConstant.firstTextOnBoarding,
+      title: MyStrings.firstTextOnBoarding,
       body: '',
     ),
     BoardingModel(
         image: MyImages.secondImageOnBoarding,
-        title: AppConstant.secondTextTitleOnBoarding,
-        body: AppConstant.secondTextBodyOnBoarding
+        title: MyStrings.secondTextTitleOnBoarding,
+        body: MyStrings.secondTextBodyOnBoarding
     ),
     BoardingModel(
         image: MyImages.thiredImageOnBoarding,
-        title: AppConstant.thirdTextTitleOnBoarding,
-        body: AppConstant.thirdTextBodyOnBoarding),
+        title: MyStrings.thirdTextTitleOnBoarding,
+        body: MyStrings.thirdTextBodyOnBoarding),
   ];
   var pageController = PageController();
   bool isLast = false;

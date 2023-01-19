@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_app/presentation/screen/feed/widget/feed_item.dart';
-import 'package:social_app/util/constant.dart';
+import 'package:social_app/presentation/shared_widget/network_image.dart';
+import 'package:social_app/util/strings.dart';
 import 'package:social_app/util/images.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:social_app/util/style.dart';
@@ -14,7 +15,7 @@ class FeedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppConstant.homeBar),
+        title: Text(MyStrings.homeBar),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -27,16 +28,16 @@ class FeedScreen extends StatelessWidget {
               child: Stack(
                 alignment: AlignmentDirectional.bottomEnd,
                 children: [
-                  Image(
-                    image: const NetworkImage(MyImages.coverImageHome),
+                  CustomNetworkImage(
+                    image:  MyImages.coverImageHome,
                     width: double.infinity,
                     height: 180.h,
-                    fit: BoxFit.cover,
                   ),
+
                   Padding(
                     padding: EdgeInsets.all(3.h),
                     child: Text(
-                      AppConstant.communicateWithFriends,
+                      MyStrings.communicateWithFriends,
                       style: Theme
                           .of(context)
                           .textTheme

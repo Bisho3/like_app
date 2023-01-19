@@ -27,23 +27,26 @@ void main() async {
   var onBoarding = CacheHelper.getData(key: 'onBoarding');
   var token = CacheHelper.getData(key: 'token');
   var tokenGoogle = CacheHelper.getData(key: 'tokenGoogle');
-  print("xxxxxxxx $onBoarding");
-  print("xxxxxxxx $token");
-  print("bbbbbbbb ${tokenGoogle} ");
-
-  if(onBoarding == null){
+  var tokenFacebook = CacheHelper.getData(key: 'tokenFacebook');
+print('bishoooo');
+print(token);
+print(tokenGoogle);
+print(tokenFacebook);
+  if (onBoarding == null) {
     widget = const OnBoardingScreen();
-  }else if(onBoarding != null && token == null && tokenGoogle == null){
+  } else if (onBoarding != null && token == null && tokenGoogle == null && tokenFacebook == null) {
     widget = LoginScreen();
-  }else{
+  } else {
     widget = const HomeScreen();
   }
-
   runApp(
       EasyLocalization(supportedLocales: const [
         Locale('ar', 'EG'),
         Locale('en', 'US'),
-      ], path: 'assets/translations', saveLocale: true, child:  MyApp(startWidget: widget),)
+      ],
+        path: 'assets/translations',
+        saveLocale: true,
+        child: MyApp(startWidget: widget),)
   );
 }
 
@@ -51,6 +54,7 @@ class MyApp extends StatelessWidget {
   Widget startWidget;
 
   MyApp({super.key, required this.startWidget});
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -62,44 +66,39 @@ class MyApp extends StatelessWidget {
             create: (BuildContext context) => LogicCubit()
         ),
       ],
-      child: BlocConsumer<LogicCubit,LogicStates>(
+      child: BlocConsumer<LogicCubit, LogicStates>(
         listener: (context, state) {},
         builder: (context, state) {
           return ScreenUtilInit(
-            designSize: const Size(360, 690),
-            minTextAdapt: true,
-            splitScreenMode: true,
-            builder: (context, child) {
-              return MaterialApp(
-                localizationsDelegates: context.localizationDelegates,
-                supportedLocales: context.supportedLocales,
-                locale: context.locale,
-                debugShowCheckedModeBanner: false,
-                theme: lightTheme,
-                home: child,
-              );
-            },
-            child: OfflineBuilder(
-              connectivityBuilder: (
-                  BuildContext context,
-                  ConnectivityResult connectivity,
-                  Widget child,
-                  ) {
-                final bool connected =
-                    connectivity != ConnectivityResult.none;
-                if (connected) {
-                  return SplashScreen(startScreen: startWidget);
-                } else {
-                  return const NoInternetScreen();
-                }
+              designSize: const Size(360, 690),
+              minTextAdapt: true,
+              splitScreenMode: true,
+              builder: (context, child) {
+                return MaterialApp(
+                  localizationsDelegates: context.localizationDelegates,
+                  supportedLocales: context.supportedLocales,
+                  locale: context.locale,
+                  debugShowCheckedModeBanner: false,
+                  theme: lightTheme,
+                  home: child,
+                );
               },
-              child: const SizedBox(),
-            )
-
-
+              child: OfflineBuilder(
+                connectivityBuilder: (BuildContext context,
+                    ConnectivityResult connectivity,
+                    Widget child,) {
+                  final bool connected =
+                      connectivity != ConnectivityResult.none;
+                  if (connected) {
+                    return SplashScreen(startScreen: startWidget);
+                  } else {
+                    return const NoInternetScreen();
+                  }
+                },
+                child: const SizedBox(),
+              )
           );
         },
-
       ),
     );
   }

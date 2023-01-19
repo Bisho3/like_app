@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:social_app/util/constant.dart';
+import 'package:social_app/util/strings.dart';
 import 'package:social_app/util/images.dart';
 import 'package:social_app/util/style.dart';
 
@@ -164,7 +164,7 @@ class FeedItem extends StatelessWidget {
                             SizedBox(
                               width: 5.w,
                             ),
-                            Text('120 ${AppConstant.comment}',
+                            Text('120 ${MyStrings.comment}',
                               style: Theme.of(context).textTheme.caption,
                             ),
                           ],
@@ -200,7 +200,7 @@ class FeedItem extends StatelessWidget {
                           width: 10.w,
                         ),
                         Text(
-                          AppConstant.writeComment,
+                          MyStrings.writeComment,
                           style: Theme.of(context).textTheme.caption,
                         ),
                       ],
@@ -219,7 +219,7 @@ class FeedItem extends StatelessWidget {
                       SizedBox(
                         width: 5.w,
                       ),
-                      Text(AppConstant.like,
+                      Text(MyStrings.like,
                         style: Theme.of(context).textTheme.caption,
                       ),
                     ],

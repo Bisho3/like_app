@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
-import 'package:social_app/util/constant.dart';
+import 'package:social_app/util/strings.dart';
 import 'package:social_app/util/images.dart';
 import 'package:social_app/util/style.dart';
 
@@ -22,7 +22,7 @@ class NoInternetScreen extends StatelessWidget {
               height: 1.h,
             ),
             Text(
-              AppConstant.noInternet,
+              MyStrings.noInternet,
               style: TextStyle(
                 color: MyColors.foreignColor,
                 fontSize: 20.sp,
@@ -33,7 +33,7 @@ class NoInternetScreen extends StatelessWidget {
               height: 1.h,
             ),
             Text(
-              AppConstant.noInternetStatus,
+              MyStrings.noInternetStatus,
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: 20.sp,
@@ -48,7 +48,7 @@ class NoInternetScreen extends StatelessWidget {
               function: () {
                 const Center(child: RefreshProgressIndicator());
               },
-              text: AppConstant.tryAgain,
+              text: MyStrings.tryAgain,
               radius: 10.r,
               width: 180.w,
               fontSize: 22.sp,

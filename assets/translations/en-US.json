@@ -71,5 +71,11 @@
   "like": "Like",
   "phone_OTP_Verified": "The phone number has been verified. Continue to register",
   "phone_Number_Submit": "The OTP has been sent to your phone number",
-  "login_Success": "Welcome to the like Application. You have logged in successfully"
+  "login_Success": "Welcome to the like Application. You have logged in successfully",
+  "post": "Post",
+  "photos": "Photos",
+  "followers": "Followers",
+  "following": "Following",
+  "addPhotos": "Add Photos",
+  "bio": "Write a bio..."
 }

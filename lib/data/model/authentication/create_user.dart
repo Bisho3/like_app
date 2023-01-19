@@ -7,6 +7,10 @@ class CreateUser{
    String? name;
    String? uId;
    String? phoneNumber;
+   String? coverImage;
+   String? profileImage;
+   String? bio;
+
 
    CreateUser({
      required this.name,
@@ -16,7 +20,10 @@ class CreateUser{
      required this.area,
      required this.uId,
      required this.address,
-     required this.phoneNumber
+     required this.phoneNumber,
+     required this.profileImage,
+     required this.coverImage,
+     required this.bio
 });
   CreateUser.fromJson(Map<String, dynamic>json){
     name = json['name'];
@@ -27,6 +34,10 @@ class CreateUser{
     uId = json['uId'];
     address = json['address'];
     phoneNumber = json['phoneNumber'];
+    profileImage = json['profileImage'];
+    coverImage = json['coverImage'];
+    bio = json['bio'];
+
   }
   Map<String,dynamic> toMap(){
     return {
@@ -37,7 +48,10 @@ class CreateUser{
       'area':area,
       'uId':uId,
       'address':address,
-      'phoneNumber':phoneNumber
+      'phoneNumber':phoneNumber,
+      'profileImage': profileImage,
+      'coverImage':coverImage,
+      'bio':bio
     };
   }
 }

@@ -7,7 +7,7 @@ import 'package:social_app/business_logic/authentication_logic/states.dart';
 import 'package:social_app/presentation/screen/authentication/screen/fisrst_step_register.dart';
 import 'package:social_app/presentation/screen/authentication/widget/show_progress_phonenum.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
-import 'package:social_app/util/constant.dart';
+import 'package:social_app/util/strings.dart';
 import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/style.dart';
 
@@ -30,7 +30,7 @@ class ConfrimPhoneNumber extends StatelessWidget {
           }
           if(state is PhoneOTPVerified){
             Navigator.pop(context);
-            showToast(text: AppConstant.phoneOTPVerified, state: ToastStates.SUCCESS);
+            showToast(text: MyStrings.phoneOTPVerified, state: ToastStates.SUCCESS);
             navigatorAndRemove(context, FirstStepRegisterScreen(phoneNumber: phoneNumber,));
           }
           if(state is ErrorOccurred){
@@ -44,7 +44,7 @@ class ConfrimPhoneNumber extends StatelessWidget {
         appBar: AppBar(
           title: Center(
             child: Text(
-              AppConstant.confirmPhone,
+              MyStrings.confirmPhone,
               style: TextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.bold,
@@ -63,7 +63,7 @@ class ConfrimPhoneNumber extends StatelessWidget {
                 children: [
                   Center(
                     child: Text(
-                      AppConstant.otpMessage,
+                      MyStrings.otpMessage,
                       style: TextStyle(
                         color: MyColors.foreignColor,
                         fontSize: 24.sp,
@@ -77,9 +77,9 @@ class ConfrimPhoneNumber extends StatelessWidget {
                     controller: pinController,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return AppConstant.emptyOtp;
+                        return MyStrings.emptyOtp;
                       } else if (value.length < 6) {
-                        return AppConstant.lessValidationOtp;
+                        return MyStrings.lessValidationOtp;
                       }
                       return null;
                     },
@@ -112,7 +112,7 @@ class ConfrimPhoneNumber extends StatelessWidget {
                         cubit.submitOTP(pinController.text);
                       }
                     },
-                    text: AppConstant.next,
+                    text: MyStrings.next,
                     radius: 10.0,
                     fontSize: 22.sp,
                     textColor: MyColors.primaryColor,
