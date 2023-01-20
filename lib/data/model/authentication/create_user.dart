@@ -10,6 +10,7 @@ class CreateUser{
    String? coverImage;
    String? profileImage;
    String? bio;
+   bool? byEmail = false;
 
 
    CreateUser({
@@ -23,7 +24,8 @@ class CreateUser{
      required this.phoneNumber,
      required this.profileImage,
      required this.coverImage,
-     required this.bio
+     required this.bio,
+     required this.byEmail
 });
   CreateUser.fromJson(Map<String, dynamic>json){
     name = json['name'];
@@ -37,7 +39,7 @@ class CreateUser{
     profileImage = json['profileImage'];
     coverImage = json['coverImage'];
     bio = json['bio'];
-
+    byEmail = json['byEmail'];
   }
   Map<String,dynamic> toMap(){
     return {
@@ -51,7 +53,8 @@ class CreateUser{
       'phoneNumber':phoneNumber,
       'profileImage': profileImage,
       'coverImage':coverImage,
-      'bio':bio
+      'bio':bio,
+      'byEmail':byEmail
     };
   }
 }

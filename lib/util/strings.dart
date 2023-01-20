@@ -76,4 +76,16 @@ class MyStrings {
   static String following ="following".tr();
   static String addPhotos ="addPhotos".tr();
   static String bio ="bio".tr();
+  static String forgetPassword = "forget_Password".tr();
+  static String send ="send".tr();
+  static String resetSuccess = "reset_Success".tr();
+  static String editProfile = "edit_Profile".tr();
+  static String aboutProfile = "about_Profile".tr();
+  static String emptyBio = "empty_Bio".tr();
+  static String update = "update".tr();
+  static String aboutCity = "about_City".tr();
+  static String language = "language".tr();
+  static String arabic = "arabic".tr();
+  static String resetPassword ="reset_Password".tr();
+
 }

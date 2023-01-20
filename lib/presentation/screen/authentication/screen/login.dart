@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_app/business_logic/authentication_logic/cubit.dart';
 import 'package:social_app/business_logic/authentication_logic/states.dart';
 import 'package:social_app/presentation/screen/authentication/screen/otp_phone.dart';
-
+import 'package:social_app/presentation/screen/authentication/screen/reset_password.dart';
 import 'package:social_app/presentation/screen/home/screen/home_screen.dart';
 import 'package:social_app/presentation/shared_widget/custom_form_field.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
@@ -43,19 +44,30 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         if (state is UserLoginSuccessStates) {
           CacheHelper.saveData(key: 'token', value: state.uId).then((value) {
-            AuthCubit.get(context).uIdToken = CacheHelper.getData(key: 'token');
             showToast(text: MyStrings.loginSuccess, state: ToastStates.SUCCESS);
+            print("bishoooo${CacheHelper.getData(key: 'token')}");
             navigatorAndRemove(context, const HomeScreen());
           });
         }
-        if(state is FacebookSuccess){
-          navigatorAndRemove(context, const HomeScreen());
-          showToast(text: MyStrings.loginSuccess, state: ToastStates.SUCCESS);
-
+        if (state is GoogleSuccess) {
+          alertDialog(
+              context: context,
+              textBody: MyStrings.successCreateUser,
+              dialogType: DialogType.success,
+              textButton: MyStrings.signIn,
+              function: () {
+                AuthCubit.get(context).userLoginWithGoogle();
+              });
         }
-        if(state is GoogleSuccess){
-          navigatorAndRemove(context, const HomeScreen());
-          showToast(text: MyStrings.loginSuccess, state: ToastStates.SUCCESS);
+        if (state is FacebookSuccess) {
+          alertDialog(
+              context: context,
+              textBody: MyStrings.successCreateUser,
+              dialogType: DialogType.success,
+              textButton: MyStrings.signIn,
+              function: () {
+                AuthCubit.get(context).userLoginWithFacebook();
+              });
         }
       },
       builder: (context, state) {
@@ -80,6 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: 10.h,
                       ),
+
                       ///========= TextFormField For Email========///
                       CustomFormField(
                         type: TextInputType.emailAddress,
@@ -98,6 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: 15.h,
                       ),
+
                       ///========= TextFormField For password========///
                       CustomFormField(
                         type: TextInputType.visiblePassword,
@@ -119,7 +133,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderOutLine: false,
                       ),
                       SizedBox(
-                        height: 15.h,
+                        height: 3.h,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                          child: CustomTextButton(
+                              function: () {
+                                navigatorTo(context, ResetPasswordScreen());
+                              }, text: MyStrings.forgetPassword,color: MyColors.primaryColor,)),
+                      SizedBox(
+                        height: 10.h,
                       ),
                       ///========== Button For sign up ========///
                       ConditionalBuilder(
@@ -128,9 +151,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           return CustomMaterialButton(
                               function: () {
                                 if (formKey.currentState!.validate()) {
-                                  cubit.userLogin(
-                                    email: emailcontroller.text,
-                                    password: passwordcontroller.text,
+                                  cubit.userLoginWithEmailAndPassword(
+                                    email: emailcontroller.text.trim(),
+                                    password: passwordcontroller.text.trim(),
                                   );
                                 }
                               },
@@ -147,6 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: 3.h,
                       ),
+
                       ///======== Text & Button Text For input To Register========///
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -190,17 +214,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                 FontAwesomeIcons.google,
                                 size: 25.sp,
                               ),
-                              onPressed: () async{
-                                await  cubit.signInWithGoogle();
+                              onPressed: () {
+                                AuthCubit.get(context).signInWithGoogle();
                               }),
                           IconButton(
                               icon: FaIcon(
                                 FontAwesomeIcons.facebook,
                                 size: 25.sp,
                               ),
-                              onPressed: () async{
-                                await  cubit.signInWithFacebook();
-                                // navigatorAndRemove(context, HomeScreen());
+                              onPressed: () {
+                                cubit.signInWithFacebook();
                               }),
                         ],
                       ),

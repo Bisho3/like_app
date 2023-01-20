@@ -15,3 +15,13 @@ class GetUserErrorStates extends LogicStates{
 
   GetUserErrorStates(this.error);
 }
+///==========reset password ======///
+class ResetPasswordLoading extends LogicStates{}
+
+class ResetPasswordSuccess extends LogicStates{}
+
+class ResetPasswordFail extends LogicStates{
+  final String error;
+
+  ResetPasswordFail(this.error);
+}

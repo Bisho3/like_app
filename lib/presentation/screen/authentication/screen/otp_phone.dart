@@ -29,7 +29,7 @@ class OtpPhoneScreen extends StatelessWidget {
         if(state is PhoneNumberSubmit){
           Navigator.pop(context);
           showToast(text: MyStrings.phoneNumberSubmit, state: ToastStates.SUCCESS);
-          navigatorAndRemove(context, ConfrimPhoneNumber(phoneNumber: phoneNumberController.text,));
+          navigatorAndRemove(context, ConfrimPhoneNumber(phoneNumber: phoneNumberController.text.trim(),));
         }
         if(state is ErrorOccurred){
           Navigator.pop(context);
@@ -83,7 +83,7 @@ class OtpPhoneScreen extends StatelessWidget {
                           showProgressIndicator(context);
                           if (formKey.currentState!.validate()) {
                             Navigator.pop(context);
-                            AuthCubit.get(context).submitPhoneNumber(phoneNumberController.text);
+                            AuthCubit.get(context).submitPhoneNumber(phoneNumberController.text.trim());
                           }else{
                             Navigator.pop(context);
                             return;

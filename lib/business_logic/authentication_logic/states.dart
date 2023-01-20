@@ -56,6 +56,11 @@ class PhoneNumberSubmit extends AuthStates {}
 ///===============google=============///
 class GoogleSuccess extends AuthStates {}
 
+class GoogleFail extends AuthStates{
+  final String error;
+
+  GoogleFail(this.error);
+}
 ///==================facebook==========///
 class FacebookSuccess extends AuthStates {}
 
@@ -65,5 +70,16 @@ class FacebookFail extends AuthStates {
   FacebookFail({required this.error});
 }
 
+
 ///========signOutFromApp =====///
 class SignOutSuccess extends AuthStates {}
+///==========reset password ======///
+class ResetPasswordLoading extends AuthStates{}
+
+class ResetPasswordSuccess extends AuthStates{}
+
+class ResetPasswordFail extends AuthStates{
+  final String error;
+
+  ResetPasswordFail(this.error);
+}

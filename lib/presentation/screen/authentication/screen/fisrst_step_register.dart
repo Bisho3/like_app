@@ -195,11 +195,11 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
                                 notAccept == true) {
                               navigatorTo(
                                   context, SecondStepRegisterScreen(
-                                email: emailController.text,
-                                password: passwordController.text,
-                                confirmPassword: confirmPasswordController.text,
-                                name: nameController.text,
-                                phoneNumber:widget.phoneNumber!,
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim(),
+                                confirmPassword: confirmPasswordController.text.trim(),
+                                name: nameController.text.trim(),
+                                phoneNumber:widget.phoneNumber!.trim(),
                               ));
                             } else if (notAccept == false) {
                               showToast(

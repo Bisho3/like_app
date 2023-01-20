@@ -77,5 +77,16 @@
   "followers": "Followers",
   "following": "Following",
   "addPhotos": "Add Photos",
-  "bio": "Write a bio..."
+  "bio": "Write a bio...",
+  "forget_Password": "Forget password?",
+  "send": "Send",
+  "reset_Success": "A message has been sent to your email. You can recover your password from there",
+  "edit_Profile": "Edit profile",
+  "about_Profile": "About profile",
+  "empty_Bio": "Bio is required",
+  "update": "Update",
+  "about_City": "About Region",
+  "language": "Language",
+  "arabic": "Arabic",
+  "reset_Password": "Reset password"
 }

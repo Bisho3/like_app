@@ -174,12 +174,12 @@ class _SecondStepRegisterScreenState extends State<SecondStepRegisterScreen> {
                                           password: widget.password,
                                           confirmPassword:
                                               widget.confirmPassword,
-                                          city: initialCityValue,
-                                          area: initialAreaValue,
-                                          location: locationController.text,
+                                          city: initialCityValue.trim(),
+                                          area: initialAreaValue.trim(),
+                                          location: locationController.text.trim(),
                                           phoneNumber: widget.phoneNumber,
                                           name: widget.name,
-                                          address: addressController.text);
+                                          address: addressController.text.trim());
                                     }
                                   }
                                 },

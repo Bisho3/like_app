@@ -26,15 +26,13 @@ void main() async {
   Widget widget;
   var onBoarding = CacheHelper.getData(key: 'onBoarding');
   var token = CacheHelper.getData(key: 'token');
-  var tokenGoogle = CacheHelper.getData(key: 'tokenGoogle');
-  var tokenFacebook = CacheHelper.getData(key: 'tokenFacebook');
+
 print('bishoooo');
 print(token);
-print(tokenGoogle);
-print(tokenFacebook);
-  if (onBoarding == null) {
+
+  if (onBoarding == null && token == null) {
     widget = const OnBoardingScreen();
-  } else if (onBoarding != null && token == null && tokenGoogle == null && tokenFacebook == null) {
+  } else if (onBoarding != null && token == null) {
     widget = LoginScreen();
   } else {
     widget = const HomeScreen();
@@ -62,6 +60,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) => AuthCubit()
         ),
+
         BlocProvider(
             create: (BuildContext context) => LogicCubit()
         ),
