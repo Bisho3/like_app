@@ -88,5 +88,8 @@
   "about_City": "About Region",
   "language": "Language",
   "arabic": "Arabic",
-  "reset_Password": "Reset password"
+  "reset_Password": "Reset password",
+  "added_Successfully" : "Added successfully",
+  "upload_Profile": "Upload profile",
+  "upload_Cover": "Upload cover"
 }

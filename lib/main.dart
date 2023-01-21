@@ -13,6 +13,7 @@ import 'package:social_app/presentation/screen/no_internet/no_internet.dart';
 import 'package:social_app/presentation/screen/splash_screen_and_onboarding/screen/onboarding_screen.dart';
 import 'package:social_app/presentation/screen/splash_screen_and_onboarding/screen/splash_screen.dart';
 import 'package:social_app/util/bloc_observer.dart';
+import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/sharedpreference.dart';
 import 'package:social_app/util/theme/theme.dart';
 
@@ -26,9 +27,6 @@ void main() async {
   Widget widget;
   var onBoarding = CacheHelper.getData(key: 'onBoarding');
   var token = CacheHelper.getData(key: 'token');
-
-print('bishoooo');
-print(token);
 
   if (onBoarding == null && token == null) {
     widget = const OnBoardingScreen();
@@ -62,7 +60,7 @@ class MyApp extends StatelessWidget {
         ),
 
         BlocProvider(
-            create: (BuildContext context) => LogicCubit()
+            create: (BuildContext context) => LogicCubit()..convertToArabicLanguage(context)
         ),
       ],
       child: BlocConsumer<LogicCubit, LogicStates>(

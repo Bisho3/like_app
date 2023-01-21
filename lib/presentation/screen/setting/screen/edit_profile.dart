@@ -1,3 +1,4 @@
+
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +7,7 @@ import 'package:social_app/business_logic/home_logic/cubit.dart';
 import 'package:social_app/business_logic/home_logic/states.dart';
 import 'package:social_app/presentation/screen/authentication/widget/drop_down.dart';
 import 'package:social_app/presentation/screen/authentication/widget/location.dart';
+import 'package:social_app/presentation/screen/setting/widget/block_edit.dart';
 import 'package:social_app/presentation/screen/setting/widget/upload_image_button.dart';
 import 'package:social_app/presentation/shared_widget/custom_form_field.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
@@ -17,34 +19,57 @@ import 'package:social_app/util/style.dart';
 
 class EditProfileScreen extends StatelessWidget {
   EditProfileScreen({Key? key}) : super(key: key);
-  TextEditingController nameController = TextEditingController();
+  TextEditingController nameController =TextEditingController();
+  TextEditingController bioController =TextEditingController();
+  TextEditingController phoneController =TextEditingController();
+  GlobalKey<FormState> formKeyAboutProfile =GlobalKey<FormState>();
+
   TextEditingController emailController = TextEditingController();
-  TextEditingController bioController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController locationController = TextEditingController();
-
-
-  List<String> listCity = [MyStrings.chooseCity, MyStrings.cairo,"القليوبية"];
-  List<String> listArea = [MyStrings.chooseArea, MyStrings.shoubraMasr,"شبرا الخيمة"];
+  GlobalKey<FormState> formKeyAboutRegion = GlobalKey<FormState>();
+  GlobalKey<FormState> formKeyResetPassword = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LogicCubit, LogicStates>(
       listener: (context, state) {
-      if(state is ResetPasswordSuccess){
-        showToast(text: MyStrings.resetSuccess , state: ToastStates.SUCCESS);
-      }
+        if (state is ResetPasswordEditProfileSuccess) {
+          showToast(text: MyStrings.resetSuccess, state: ToastStates.SUCCESS);
+        }
+        if (state is GetProfileImageSuccess) {
+          showToast(
+              text: MyStrings.addedSuccessfully, state: ToastStates.SUCCESS);
+        }
+        if (state is GetCoverImageSuccess) {
+          showToast(
+              text: MyStrings.addedSuccessfully, state: ToastStates.SUCCESS);
+        }
       },
       builder: (context, state) {
-        var cubit = LogicCubit.get(context).userModel;
-        nameController.text = (cubit?.name)!;
-        bioController.text = (cubit?.bio)!;
-        phoneController.text = (cubit?.phoneNumber)!;
-        addressController.text = (cubit?.address)!;
-        locationController.text = (cubit?.location)!;
-        String initialCityValue = (cubit?.city)!;
-        String initialAreaValue = (cubit?.area)!;
+        LogicCubit cubit = LogicCubit.get(context);
+        var userModel = cubit.userModel;
+        var profileImage = cubit.profileImages;
+        var coverImage = cubit.coverImage;
+
+        nameController.text = (userModel?.name)!;
+        bioController.text = (userModel?.bio)!;
+        phoneController.text = (userModel?.phoneNumber)!;
+        addressController.text = (userModel?.address)!;
+        locationController.text = (userModel?.location)!;
+        String initialCityValue = (userModel?.city)!;
+        String initialAreaValue = (userModel?.area)!;
+        emailController.text = (userModel?.email)!;
+        List<String> listCity = [
+          (userModel?.city)!,
+          MyStrings.cairo,
+          "القليوبية"
+        ];
+        List<String> listArea = [
+          (userModel?.area)!,
+          MyStrings.shoubraMasr,
+          "شبراالخيمة"
+        ];
         return Scaffold(
           appBar: AppBar(
             title: Text(MyStrings.editProfile),
@@ -54,6 +79,15 @@ class EditProfileScreen extends StatelessWidget {
               padding: EdgeInsets.all(8.h),
               child: Column(
                 children: [
+                  if (state is UpdateUserLoadingStates)
+                    Column(
+                      children: [
+                        const LinearProgressIndicator(),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                      ],
+                    ),
                   SizedBox(
                     height: 190.h,
                     child: Stack(
@@ -64,19 +98,23 @@ class EditProfileScreen extends StatelessWidget {
                           children: [
                             Align(
                               alignment: AlignmentDirectional.topCenter,
-                              child: CustomNetworkImage(
-                                image:
-                                    "${cubit?.coverImage == null ? MyImages.coverImageHome : cubit?.coverImage}",
-                                width: double.infinity,
-                                height: 140.h,
-                                border: BorderRadius.only(
-                                  topRight: Radius.circular(5.r),
-                                  topLeft: Radius.circular(5.r),
-                                ),
-                              ),
+                              child: coverImage == null
+                                  ? CustomNetworkImage(
+                                      image:
+                                          "${userModel?.coverImage == null ? MyImages.coverImageHome : userModel?.coverImage}",
+                                      width: double.infinity,
+                                      height: 140.h,
+                                      border: BorderRadius.only(
+                                        topRight: Radius.circular(5.r),
+                                        topLeft: Radius.circular(5.r),
+                                      ),
+                                    )
+                                  : Image(image: FileImage(coverImage)),
                             ),
                             CustomUploadImageButton(
-                              function: () {},
+                              function: () {
+                                cubit.getCoverImage();
+                              },
                             ),
                           ],
                         ),
@@ -88,43 +126,98 @@ class EditProfileScreen extends StatelessWidget {
                               backgroundColor:
                                   Theme.of(context).scaffoldBackgroundColor,
                               child: CircleAvatar(
-                                radius: 60.r,
-                                backgroundColor: MyColors.greyColor,
-                                backgroundImage: NetworkImage(
-                                    "${cubit?.profileImage == null ? MyImages.profileImage : cubit?.profileImage}"),
-                              ),
+                                  radius: 60.r,
+                                  backgroundColor: MyColors.greyColor,
+                                  backgroundImage: profileImage == null
+                                      ? NetworkImage(
+                                          "${userModel?.profileImage == null ? MyImages.profileImage : userModel?.profileImage}")
+                                      : Image(image: FileImage(profileImage))
+                                          .image),
                             ),
                             CustomUploadImageButton(
-                              function: () {},
+                              function: () {
+                                cubit.getProfileImage();
+                              },
                             ),
                           ],
                         ),
                       ],
                     ),
                   ),
+                  if (cubit.profileImages != null || cubit.coverImage != null)
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: 8.h,
+                        ),
+                        Row(
+                          children: [
+                            if (cubit.profileImages != null)
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    CustomMaterialButton(
+                                      function: () {
+                                        cubit.uploadProfileImage();
+                                      },
+                                      text: MyStrings.uploadProfile,
+                                      radius: 10.r,
+                                      borderRadius: MyColors.foreignColor,
+                                      background: MyColors.whiteColor,
+                                      textColor: MyColors.primaryColor,
+                                      fontSize: 16.sp,
+                                    ),
+                                    if (state is UploadProfileImageLoading)
+                                      Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 5.h,
+                                          ),
+                                          const LinearProgressIndicator(),
+                                        ],
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            SizedBox(width: 5.w),
+                            if (cubit.coverImage != null)
+                              Expanded(
+                                  child: Column(
+                                children: [
+                                  CustomMaterialButton(
+                                    function: () {
+                                      cubit.uploadCoverImage();
+                                    },
+                                    text: MyStrings.uploadCover,
+                                    radius: 10.r,
+                                    borderRadius: MyColors.foreignColor,
+                                    background: MyColors.whiteColor,
+                                    textColor: MyColors.primaryColor,
+                                  ),
+                                  if (state is UploadCoverImageLoading)
+                                    Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 5.h,
+                                        ),
+                                        const LinearProgressIndicator(),
+                                      ],
+                                    ),
+                                ],
+                              )),
+                          ],
+                        ),
+                      ],
+                    ),
                   SizedBox(
                     height: 10.h,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: MyColors.foreignColor,
-                        ),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Padding(
-                      padding: EdgeInsets.all(10.h),
-                      child: Column(
+                  Form(
+                    key: formKeyAboutProfile,
+                    child: BlockEditOneItem(
+                      titleText: MyStrings.aboutProfile,
+                      widget: Column(
                         children: [
-                          Text(
-                           MyStrings.aboutProfile,
-                            style: TextStyle(
-                                color: MyColors.primaryColor,
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
                           CustomFormField(
                             type: TextInputType.name,
                             text: MyStrings.name,
@@ -186,7 +279,25 @@ class EditProfileScreen extends StatelessWidget {
                             height: 10.h,
                           ),
                           CustomMaterialButton(
-                            function: () {},
+                            function: () {
+                              if (formKeyAboutProfile.currentState!
+                                  .validate()) {
+                                cubit.updateCurrentUsers(
+                                  name: nameController.text.trim(),
+                                  bio: bioController.text.trim(),
+                                  phoneNumber: phoneController.text,
+                                  byEmail: userModel?.byEmail,
+                                  location: userModel?.location,
+                                  coverImages: userModel?.coverImage,
+                                  city: userModel?.city,
+                                  area: userModel?.area,
+                                  address: userModel?.address,
+                                  profileImage: userModel?.profileImage,
+                                  email: userModel?.email,
+                                  uId: userModel?.uId,
+                                );
+                              }
+                            },
                             text: MyStrings.update,
                             radius: 10,
                             textColor: MyColors.primaryColor,
@@ -200,26 +311,13 @@ class EditProfileScreen extends StatelessWidget {
                   SizedBox(
                     height: 10.h,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: MyColors.foreignColor,
-                        ),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Padding(
-                      padding: EdgeInsets.all(10.h),
-                      child: Column(
+                  Form(
+                    key: formKeyAboutRegion,
+                    child:
+                    BlockEditOneItem(
+                      titleText: MyStrings.aboutCity,
+                      widget: Column(
                         children: [
-                          Text(
-                          MyStrings.aboutCity,
-                            style: TextStyle(
-                                color: MyColors.primaryColor,
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
                           CustomDropDownButton(
                             listItems: listCity,
                             initialValue: initialCityValue,
@@ -256,6 +354,7 @@ class EditProfileScreen extends StatelessWidget {
                           SizedBox(
                             height: 10.h,
                           ),
+
                           ///======TextFormField For Location=====///
                           CustomFormField(
                             text: MyStrings.location,
@@ -283,7 +382,25 @@ class EditProfileScreen extends StatelessWidget {
                             height: 10.h,
                           ),
                           CustomMaterialButton(
-                            function: () {},
+                            function: () {
+                              if (formKeyAboutRegion.currentState!
+                                  .validate()) {
+                                cubit.updateCurrentUsers(
+                                  name: userModel?.name,
+                                  bio: userModel?.bio,
+                                  phoneNumber: userModel?.phoneNumber,
+                                  byEmail: userModel?.byEmail,
+                                  location: locationController.text.trim(),
+                                  coverImages: userModel?.coverImage,
+                                  city: initialCityValue.trim(),
+                                  area: initialAreaValue.trim(),
+                                  address: addressController.text.trim(),
+                                  profileImage: userModel?.profileImage,
+                                  email: userModel?.email,
+                                  uId: userModel?.uId,
+                                );
+                              }
+                            },
                             text: MyStrings.update,
                             radius: 10,
                             textColor: MyColors.primaryColor,
@@ -297,100 +414,76 @@ class EditProfileScreen extends StatelessWidget {
                   SizedBox(
                     height: 10.h,
                   ),
-                  cubit?.byEmail == true ?
-                  Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              color: MyColors.foreignColor,
-                            ),
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Padding(
-                          padding: EdgeInsets.all(10.h),
+                  userModel?.byEmail == true
+                      ? Form(
+                          key: formKeyResetPassword,
                           child: Column(
                             children: [
-                              Text(
-                                MyStrings.resetPassword,
-                                style: TextStyle(
-                                    color: MyColors.primaryColor,
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.bold),
+                              BlockEditOneItem(titleText: MyStrings.resetPassword, widget: Column(
+                                children: [
+                                  CustomFormField(
+                                    type: TextInputType.emailAddress,
+                                    controller: emailController,
+                                    text: MyStrings.eMail,
+                                    preffixIcon: Icons.person_outline_sharp,
+                                    validate: (value) {
+                                      if (value!.isEmpty) {
+                                        return MyStrings.emptyEmail;
+                                      }
+                                      return null;
+                                    },
+                                    borderOutLine: true,
+                                    onTap: () {},
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  ConditionalBuilder(
+                                    condition: state
+                                    is! ResetPasswordEditProfileLoading,
+                                    builder: (context) {
+                                      return CustomMaterialButton(
+                                          function: () {
+                                            if (formKeyResetPassword
+                                                .currentState!
+                                                .validate()) {
+                                              print("this.reset");
+                                              cubit.resetPassword(
+                                                  emailController.text
+                                                      .trim());
+                                            }
+                                          },
+                                          text: MyStrings.send,
+                                          radius: 10.0,
+                                          background: MyColors.primaryColor,
+                                          borderRadius:
+                                          MyColors.primaryColor,
+                                          fontSize: 16.sp);
+                                    },
+                                    fallback: (context) => const Center(
+                                        child: RefreshProgressIndicator()),
+                                  ),
+                                ],
+                              ),
                               ),
                               SizedBox(
                                 height: 10.h,
                               ),
-                              CustomFormField(
-                                type: TextInputType.emailAddress,
-                                controller: emailController,
-                                text: MyStrings.eMail,
-                                preffixIcon: Icons.person_outline_sharp,
-                                validate: (value) {
-                                  if (value!.isEmpty) {
-                                    return MyStrings.emptyEmail;
-                                  }
-                                  return null;
-                                },
-                                borderOutLine: true,
-                                onTap: () {},
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              ConditionalBuilder(
-                                condition: state is! ResetPasswordLoading,
-                                builder: (context) {
-                                  return CustomMaterialButton(
-                                      function: () {
-                                        // if (formKey.currentState!.validate()) {
-                                         // LogicCubit.get(context).resetPassword(emailController.text.trim());
-                                        // }
-                                      },
-                                      text: MyStrings.send,
-                                      radius: 10.0,
-                                      background: MyColors.primaryColor,
-                                      borderRadius: MyColors.primaryColor,
-                                      fontSize: 16.sp);
-                                },
-                                fallback: (context) =>
-                                const Center(child: RefreshProgressIndicator()),
-                              ),
-
                             ],
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                    ],
-                  )
-                      :const SizedBox(),
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: MyColors.foreignColor,
-                        ),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Padding(
-                      padding: EdgeInsets.all(10.h),
-                      child: Column(
-                        children: [
-                          Text(
-                            MyStrings.language,
-                            style: TextStyle(
-                                color: MyColors.primaryColor,
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Row(
+                        )
+                      : const SizedBox(),
+                      BlockEditOneItem(
+                        titleText: MyStrings.language,
+                        widget:  ConditionalBuilder(
+                          condition: state is! ConvertLanguageLoading,
+                          builder: (context) => Row(
                             children: [
                               Expanded(
                                 child: CustomMaterialButton(
-                                  function: () {},
+                                  function: () {
+                                    cubit.convertToArabicLanguage(context);
+                                  },
                                   text: MyStrings.arabic,
                                   radius: 10,
                                   textColor: MyColors.primaryColor,
@@ -403,7 +496,9 @@ class EditProfileScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 child: CustomMaterialButton(
-                                  function: () {},
+                                  function: () {
+                                    cubit.convertToEnglishLanguage(context);
+                                  },
                                   text: 'English',
                                   radius: 10,
                                   textColor: MyColors.primaryColor,
@@ -413,9 +508,9 @@ class EditProfileScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                    ),
+                          fallback: (context) =>
+                          const Center(child: RefreshProgressIndicator()),
+                        ),
                   ),
                 ],
               ),

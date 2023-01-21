@@ -88,5 +88,8 @@
   "about_City": "حول المنطقة",
   "language": "اللغة",
   "arabic": "العربية",
-  "reset_Password": "إعادة تعيين كلمة المرور"
+  "reset_Password": "إعادة تعيين كلمة المرور",
+  "added_Successfully": "تم الأضافة بنجاح",
+  "upload_Profile": "تحميل الصورة الشخصية",
+  "upload_Cover": "تحميل صورة الغلاف"
 }
