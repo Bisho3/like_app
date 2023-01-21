@@ -105,22 +105,21 @@ class AuthCubit extends Cubit<AuthStates> {
     required String profileImage,
     String? coverImages,
     String? bio,
-   required bool? byEmail,
+    required bool? byEmail,
   }) {
     CreateUser model = CreateUser(
-      name: name,
-      email: email,
-      bio: MyStrings.bio,
-      coverImage: coverImages,
-      profileImage: profileImage,
-      phoneNumber: phoneNumber,
-      location: location,
-      city: city,
-      area: area,
-      address: address,
-      uId: uId,
-      byEmail: byEmail
-    );
+        name: name,
+        email: email,
+        bio: MyStrings.bio,
+        coverImage: coverImages,
+        profileImage: profileImage,
+        phoneNumber: phoneNumber,
+        location: location,
+        city: city,
+        area: area,
+        address: address,
+        uId: uId,
+        byEmail: byEmail);
     FirebaseFirestore.instance
         .collection('users')
         .doc(uId)
@@ -197,7 +196,6 @@ class AuthCubit extends Cubit<AuthStates> {
       idToken: googleSignInAuthentication?.idToken,
     );
     await auth.signInWithCredential(credential).then((value) {
-      print('saaaaaaaaaaaaaaaaaaa');
       createUser(
           uId: "${googleSignInAuthentication?.idToken}",
           email: "${googleSignInAccount?.email}",
@@ -211,10 +209,6 @@ class AuthCubit extends Cubit<AuthStates> {
           location: MyStrings.location,
           byEmail: false,
           phoneNumber: MyStrings.phoneNumber);
-      print(googleSignInAccount?.email);
-      print(googleSignInAccount?.displayName);
-      print(googleSignInAccount?.photoUrl);
-      print(googleSignInAccount?.id);
       emit(GoogleSuccess());
     }).catchError((error) {
       print(error.toString());
@@ -225,28 +219,33 @@ class AuthCubit extends Cubit<AuthStates> {
 
   ///=========== facebook ======///
   FacebookModel? facebookModel;
+
   void signInWithFacebook() async {
     final LoginResult loginResult = await facebookAuth.login();
     final OAuthCredential facebookAuthCredential =
         FacebookAuthProvider.credential(loginResult.accessToken!.token);
     final userData = await facebookAuth.getUserData();
 
-    auth
-        .signInWithCredential(facebookAuthCredential)
-        .then((value) {
+    auth.signInWithCredential(facebookAuthCredential).then((value) {
       facebookModel = FacebookModel.fromJson(userData);
       createUser(
         uId: "${facebookModel?.id}",
         email: "${facebookModel?.email}",
         name: "${facebookModel?.name}",
         profileImage: "${facebookModel?.facebookPhotoModel?.url}",
+        coverImages: MyImages.coverImageHome,
+        bio: MyStrings.bio,
+        phoneNumber: MyStrings.phoneNumber,
+        address: MyStrings.address,
+        area: MyStrings.chooseArea,
+        city: MyStrings.chooseCity,
+        location: MyStrings.location,
         byEmail: false,
       );
       emit(FacebookSuccess());
-    })
-        .catchError((error) {
-          showToast(text: error.toString(), state: ToastStates.ERROR);
-          emit(FacebookFail(error: error.toString()));
+    }).catchError((error) {
+      showToast(text: error.toString(), state: ToastStates.ERROR);
+      emit(FacebookFail(error: error.toString()));
     });
   }
 
@@ -284,27 +283,24 @@ class AuthCubit extends Cubit<AuthStates> {
     await auth.signInWithCredential(credential).then((value) {
       emit(UserLoginSuccessStates("${googleSignInAuthentication?.idToken}"));
     }).catchError((error) {
-      print(error.toString());
       emit(UserLoginErrorStates(error.toString()));
     });
   }
 
   void userLoginWithFacebook() async {
     emit(UserLoginLoadingStates());
-     LoginResult loginResult = await facebookAuth.login();
-     OAuthCredential facebookAuthCredential =
-    FacebookAuthProvider.credential(loginResult.accessToken!.token);
-    auth
-        .signInWithCredential(facebookAuthCredential)
-        .then((value) {
+    LoginResult loginResult = await facebookAuth.login();
+    OAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(loginResult.accessToken!.token);
+    auth.signInWithCredential(facebookAuthCredential).then((value) {
       emit(UserLoginSuccessStates(("${facebookModel?.id}")));
     }).catchError((error) {
-      print(error.toString());
       showToast(text: error.toString(), state: ToastStates.ERROR);
       emit(UserLoginErrorStates(error.toString()));
     });
   }
-///========== reset password ==========///
+
+  ///========== reset password ==========///
   void resetPassword(String email) {
     emit(ResetPasswordLoading());
     auth
@@ -320,7 +316,7 @@ class AuthCubit extends Cubit<AuthStates> {
   }
 
   ///=======signOut====///
-  Future<void> signOutFromApp() async {
+  void signOutFromApp() async {
     await auth.signOut();
     await googleSignIn.signOut();
     await FacebookAuth.i.logOut();

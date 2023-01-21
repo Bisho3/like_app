@@ -3,16 +3,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:social_app/util/style.dart';
 
 class CustomTextButton extends StatelessWidget {
-  Function function;
-  String text;
-  FontWeight? fontWeight;
-  Color color ;
-CustomTextButton({super.key,
-    required this.function,
-  required this.text,
-  this.fontWeight ,
-  this.color = MyColors.foreignColor
-});
+  final Function function;
+  final String text;
+  final FontWeight? fontWeight;
+  final Color color;
+
+  const CustomTextButton(
+      {super.key,
+      required this.function,
+      required this.text,
+      this.fontWeight,
+      this.color = MyColors.foreignColor});
+
   @override
   Widget build(BuildContext context) {
     return TextButton(

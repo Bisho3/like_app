@@ -14,8 +14,11 @@ import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/style.dart';
 
 class FirstStepRegisterScreen extends StatefulWidget {
-  String? phoneNumber;
-  FirstStepRegisterScreen({Key? key,required this.phoneNumber}) : super(key: key);
+  final String? phoneNumber;
+
+  const FirstStepRegisterScreen({Key? key, required this.phoneNumber})
+      : super(key: key);
+
   @override
   State<FirstStepRegisterScreen> createState() =>
       _FirstStepRegisterScreenState();
@@ -37,9 +40,9 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit,AuthStates>(
-      listener:(context,state){} ,
-      builder: (context,state){
+    return BlocConsumer<AuthCubit, AuthStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
         AuthCubit cubit = AuthCubit.get(context);
         return SafeArea(
           child: Form(
@@ -47,9 +50,7 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
             child: Scaffold(
               appBar: AppBar(
                 titleSpacing: 0.0,
-                title: CustomTextRegisterBar(
-                        text: MyStrings.firstStepRegister
-                    ),
+                title: CustomTextRegisterBar(text: MyStrings.firstStepRegister),
               ),
               body: SingleChildScrollView(
                 child: Padding(
@@ -95,6 +96,7 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
                       SizedBox(
                         height: 15.h,
                       ),
+
                       ///=========== TextFormField For Password=====///
                       CustomFormField(
                         type: TextInputType.visiblePassword,
@@ -113,6 +115,7 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
                       SizedBox(
                         height: 15.h,
                       ),
+
                       ///=========== TextFormField For Confirm Password=====///
                       CustomFormField(
                         type: TextInputType.visiblePassword,
@@ -141,6 +144,7 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
                       SizedBox(
                         height: 8.h,
                       ),
+
                       ///==== CheckBox & Text & Text Button For Terms & Condition =====///
                       Row(
                         children: [
@@ -156,8 +160,8 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
                               },
                               shape: const CircleBorder(
                                   side: BorderSide(
-                                    color: Colors.blue,
-                                  )),
+                                color: Colors.blue,
+                              )),
                             ),
                           ),
                           SizedBox(
@@ -194,13 +198,15 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
                             if (formKey.currentState!.validate() &&
                                 notAccept == true) {
                               navigatorTo(
-                                  context, SecondStepRegisterScreen(
-                                email: emailController.text.trim(),
-                                password: passwordController.text.trim(),
-                                confirmPassword: confirmPasswordController.text.trim(),
-                                name: nameController.text.trim(),
-                                phoneNumber:widget.phoneNumber!.trim(),
-                              ));
+                                  context,
+                                  SecondStepRegisterScreen(
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                    confirmPassword:
+                                        confirmPasswordController.text.trim(),
+                                    name: nameController.text.trim(),
+                                    phoneNumber: widget.phoneNumber!.trim(),
+                                  ));
                             } else if (notAccept == false) {
                               showToast(
                                   text: MyStrings.doNotAgreeTerms,

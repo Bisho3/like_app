@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:social_app/util/style.dart';
 
 class CustomUploadImageButton extends StatelessWidget {
-  Function function;
-   CustomUploadImageButton({Key? key,required this.function}) : super(key: key);
+  final Function function;
+  const CustomUploadImageButton({Key? key,required this.function}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -15,26 +15,30 @@ import 'package:social_app/util/style.dart';
 
 class OtpPhoneScreen extends StatelessWidget {
   OtpPhoneScreen({Key? key}) : super(key: key);
-  TextEditingController phoneNumberController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
+  final TextEditingController phoneNumberController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthStates>(
       listener: (context, state) {
-        if(state is PhoneLoadingStates){
+        if (state is PhoneLoadingStates) {
           showProgressIndicator(context);
         }
-        if(state is PhoneNumberSubmit){
+        if (state is PhoneNumberSubmit) {
           Navigator.pop(context);
-          showToast(text: MyStrings.phoneNumberSubmit, state: ToastStates.SUCCESS);
-          navigatorAndRemove(context, ConfrimPhoneNumber(phoneNumber: phoneNumberController.text.trim(),));
+          showToast(
+              text: MyStrings.phoneNumberSubmit, state: ToastStates.SUCCESS);
+          navigatorAndRemove(
+              context,
+              ConfirmPhoneNumber(
+                phoneNumber: phoneNumberController.text.trim(),
+              ));
         }
-        if(state is ErrorOccurred){
+        if (state is ErrorOccurred) {
           Navigator.pop(context);
           String errorMsg = (state).error;
-          showToast(text: errorMsg, state:ToastStates.WARMIMG);
+          showToast(text: errorMsg, state: ToastStates.WARMIMG);
         }
       },
       builder: (context, state) {
@@ -73,7 +77,7 @@ class OtpPhoneScreen extends StatelessWidget {
                           return null;
                         },
                         text: MyStrings.phoneNumber,
-                        onTap: (){},
+                        onTap: () {},
                         preffixIcon: Icons.phone),
                     SizedBox(
                       height: 10.h,
@@ -83,8 +87,9 @@ class OtpPhoneScreen extends StatelessWidget {
                           showProgressIndicator(context);
                           if (formKey.currentState!.validate()) {
                             Navigator.pop(context);
-                            AuthCubit.get(context).submitPhoneNumber(phoneNumberController.text.trim());
-                          }else{
+                            AuthCubit.get(context).submitPhoneNumber(
+                                phoneNumberController.text.trim());
+                          } else {
                             Navigator.pop(context);
                             return;
                           }

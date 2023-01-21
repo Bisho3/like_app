@@ -14,19 +14,19 @@ import 'package:social_app/util/style.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
   ResetPasswordScreen({Key? key}) : super(key: key);
-  TextEditingController emailController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit,AuthStates>(
-      listener: (context,state){
-        if(state is ResetPasswordSuccess){
-          showToast(text: MyStrings.resetSuccess , state: ToastStates.SUCCESS);
+    return BlocConsumer<AuthCubit, AuthStates>(
+      listener: (context, state) {
+        if (state is ResetPasswordSuccess) {
+          showToast(text: MyStrings.resetSuccess, state: ToastStates.SUCCESS);
           Navigator.pop(context);
         }
       },
-      builder: (context,state){
+      builder: (context, state) {
         return Scaffold(
           appBar: AppBar(),
           body: Form(
@@ -46,6 +46,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       SizedBox(
                         height: 30.h,
                       ),
+
                       ///========= TextFormField For Email========///
                       CustomFormField(
                         type: TextInputType.emailAddress,
@@ -70,7 +71,8 @@ class ResetPasswordScreen extends StatelessWidget {
                           return CustomMaterialButton(
                               function: () {
                                 if (formKey.currentState!.validate()) {
-                                  AuthCubit.get(context).resetPassword(emailController.text.trim());
+                                  AuthCubit.get(context).resetPassword(
+                                      emailController.text.trim());
                                 }
                               },
                               text: MyStrings.send,
@@ -80,9 +82,8 @@ class ResetPasswordScreen extends StatelessWidget {
                               fontSize: 16.sp);
                         },
                         fallback: (context) =>
-                        const Center(child: RefreshProgressIndicator()),
+                            const Center(child: RefreshProgressIndicator()),
                       ),
-
                     ],
                   ),
                 ),

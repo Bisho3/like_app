@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 
 class CustomLocation extends StatelessWidget {
-  BuildContext context;
-  TextEditingController controller;
+  final BuildContext context;
+  final TextEditingController controller;
 
-  CustomLocation({
+  const CustomLocation({
     Key? key,
     required this.context,
     required this.controller,

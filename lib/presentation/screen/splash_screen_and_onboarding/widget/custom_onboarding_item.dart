@@ -5,8 +5,9 @@ import 'package:social_app/data/model/onboarding/onboarding.dart';
 import 'package:social_app/util/style.dart';
 
 class CustomOnBoardingItem extends StatelessWidget {
-   CustomOnBoardingItem({Key? key,required this.model}) : super(key: key);
-  BoardingModel model;
+  const CustomOnBoardingItem({Key? key, required this.model}) : super(key: key);
+  final BoardingModel model;
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -22,7 +23,6 @@ class CustomOnBoardingItem extends StatelessWidget {
               ),
             ),
           ),
-
           Align(
             alignment: Alignment.center,
             child: Text(

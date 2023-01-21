@@ -3,11 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:social_app/util/style.dart';
 
 class CustomDropDownButton extends StatelessWidget {
-  List<String> listItems;
-  Function? onChange;
-  String? initialValue;
+  final List<String> listItems;
+  final Function? onChange;
+  final String? initialValue;
 
-  CustomDropDownButton(
+  const CustomDropDownButton(
       {Key? key,
       required this.listItems,
       required this.onChange,

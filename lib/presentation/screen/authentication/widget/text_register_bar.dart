@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextRegisterBar extends StatelessWidget {
-  String text;
+  final String text;
 
-  CustomTextRegisterBar({
+  const CustomTextRegisterBar({
     Key? key,
     required this.text,
   }) : super(key: key);

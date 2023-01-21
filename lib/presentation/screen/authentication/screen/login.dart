@@ -20,7 +20,7 @@ import 'package:social_app/util/sharedpreference.dart';
 import 'package:social_app/util/style.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -28,9 +28,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   ///============== Controller for login ========///
-  TextEditingController emailcontroller = TextEditingController();
-  TextEditingController passwordcontroller = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,6 @@ class _LoginScreenState extends State<LoginScreen> {
         if (state is UserLoginSuccessStates) {
           CacheHelper.saveData(key: 'token', value: state.uId).then((value) {
             showToast(text: MyStrings.loginSuccess, state: ToastStates.SUCCESS);
-            print("bishoooo${CacheHelper.getData(key: 'token')}");
             navigatorAndRemove(context, const HomeScreen());
           });
         }
@@ -96,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ///========= TextFormField For Email========///
                       CustomFormField(
                         type: TextInputType.emailAddress,
-                        controller: emailcontroller,
+                        controller: emailController,
                         text: MyStrings.eMail,
                         preffixIcon: Icons.person_outline_sharp,
                         validate: (value) {
@@ -115,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ///========= TextFormField For password========///
                       CustomFormField(
                         type: TextInputType.visiblePassword,
-                        controller: passwordcontroller,
+                        controller: passwordController,
                         text: MyStrings.password,
                         preffixIcon: Icons.lock_outline,
                         validate: (value) {
@@ -136,14 +135,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 3.h,
                       ),
                       Align(
-                        alignment: Alignment.centerLeft,
+                          alignment: Alignment.centerLeft,
                           child: CustomTextButton(
-                              function: () {
-                                navigatorTo(context, ResetPasswordScreen());
-                              }, text: MyStrings.forgetPassword,color: MyColors.primaryColor,)),
+                            function: () {
+                              navigatorTo(context, ResetPasswordScreen());
+                            },
+                            text: MyStrings.forgetPassword,
+                            color: MyColors.primaryColor,
+                          )),
                       SizedBox(
                         height: 10.h,
                       ),
+
                       ///========== Button For sign up ========///
                       ConditionalBuilder(
                         condition: state is! UserLoginLoadingStates,
@@ -152,8 +155,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               function: () {
                                 if (formKey.currentState!.validate()) {
                                   cubit.userLoginWithEmailAndPassword(
-                                    email: emailcontroller.text.trim(),
-                                    password: passwordcontroller.text.trim(),
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim(),
                                   );
                                 }
                               },

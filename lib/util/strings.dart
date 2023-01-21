@@ -87,7 +87,7 @@ class MyStrings {
   static String language = "language".tr();
   static String arabic = "arabic".tr();
   static String resetPassword ="reset_Password".tr();
-  static String addedSuccessfully ="added_Successfully";
+  static String addedSuccessfully ="added_Successfully".tr();
   static String uploadProfile ="upload_Profile".tr();
   static String uploadCover ="upload_Cover".tr();
 }

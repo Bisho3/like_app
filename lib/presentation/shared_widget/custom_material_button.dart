@@ -2,25 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:social_app/util/style.dart';
 
 class CustomMaterialButton extends StatelessWidget {
-  double? width;
-  Color? background ;
-  Function function;
-  String text;
-  double? fontSize ;
-  Color? textColor ;
-  double? radius ;
-  Color borderRadius ;
+  final double? width;
+  final Color? background;
 
-  CustomMaterialButton({super.key,
-    required this.function,
-    required this.text,
-    this.width = double.infinity,
-    this.background = MyColors.primaryColor,
-    this.fontSize = 18,
-    this.textColor = MyColors.whiteColor,
-    this.radius = 30.0,
-    this.borderRadius = MyColors.primaryColor
-  });
+  final Function function;
+  final String text;
+  final double? fontSize;
+
+  final Color? textColor;
+
+  final double? radius;
+
+  final Color borderRadius;
+
+  const CustomMaterialButton(
+      {super.key,
+      required this.function,
+      required this.text,
+      this.width = double.infinity,
+      this.background = MyColors.primaryColor,
+      this.fontSize = 18,
+      this.textColor = MyColors.whiteColor,
+      this.radius = 30.0,
+      this.borderRadius = MyColors.primaryColor});
 
   @override
   Widget build(BuildContext context) {

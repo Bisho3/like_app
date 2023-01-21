@@ -2,24 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomFormField extends StatelessWidget {
-  TextInputType type;
-  TextEditingController controller;
-  String? Function(String? value) validate;
-  String text;
-  Function? onFieldSubmit;
-  Function? onTap;
-  IconData? preffixIcon;
-  bool isPassword;
-  IconData? suffixIcon;
-  Function? suffixOnPressed;
-  Function? onchange;
-  Function? onSubmit;
-  Function? preffixOnPressed;
-  double radius = 10.0;
-  String? initialValue;
-  bool borderOutLine = true;
+  final TextInputType type;
+  final TextEditingController controller;
+  final String? Function(String? value) validate;
+  final String text;
+  final Function? onFieldSubmit;
+  final Function? onTap;
+  final IconData? preffixIcon;
+  final bool isPassword;
+  final IconData? suffixIcon;
+  final Function? suffixOnPressed;
+  final Function? onchange;
+  final Function? onSubmit;
+  final Function? preffixOnPressed;
+  final double radius;
 
-  CustomFormField({
+  final String? initialValue;
+  final bool borderOutLine;
+
+  const CustomFormField({
     super.key,
     required this.type,
     required this.controller,
@@ -50,7 +51,7 @@ class CustomFormField extends StatelessWidget {
       validator: (value) {
         return validate(value);
       },
-      onTap: (){
+      onTap: () {
         onTap!();
       },
       style: TextStyle(fontSize: 14.sp),

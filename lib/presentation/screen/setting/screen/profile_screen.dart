@@ -10,8 +10,9 @@ import 'package:social_app/business_logic/home_logic/cubit.dart';
 import 'package:social_app/business_logic/home_logic/states.dart';
 import 'package:social_app/presentation/screen/authentication/screen/login.dart';
 import 'package:social_app/presentation/screen/setting/screen/edit_profile.dart';
+import 'package:social_app/presentation/screen/setting/widget/image_profile_and_cover.dart';
 import 'package:social_app/presentation/screen/setting/widget/know_number.dart';
-import 'package:social_app/presentation/screen/setting/widget/upload_image_button.dart';
+import 'package:social_app/presentation/screen/setting/widget/icon_image_button.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
 import 'package:social_app/presentation/shared_widget/network_image.dart';
 import 'package:social_app/util/helper.dart';
@@ -52,38 +53,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   padding: EdgeInsets.all(8.h),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 190.h,
-                        child: Stack(
-                          alignment: AlignmentDirectional.bottomCenter,
-                          children: [
-                            Align(
-                              alignment: AlignmentDirectional.topCenter,
-                              child: CustomNetworkImage(
-                                image:
-                                    "${cubit?.coverImage == null ? MyImages.coverImageHome : cubit?.coverImage}",
-                                width: double.infinity,
-                                height: 140.h,
-                                border: BorderRadius.only(
-                                  topRight: Radius.circular(5.r),
-                                  topLeft: Radius.circular(5.r),
-                                ),
-                              ),
-                            ),
-                            CircleAvatar(
-                              radius: 63.r,
-                              backgroundColor:
-                                  Theme.of(context).scaffoldBackgroundColor,
-                              child: CircleAvatar(
-                                radius: 60.r,
-                                backgroundColor: MyColors.greyColor,
-                                backgroundImage: NetworkImage(
-                                    "${cubit?.profileImage == null ? MyImages.profileImage : cubit?.profileImage}"),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                       ImageProfileAndCover(
+                         editCover: false,
+                         editProfile: false,
+                       ),
                       Text(
                         "${cubit?.name}",
                         style: Theme.of(context).textTheme.bodyText1,
@@ -131,15 +104,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           OutlinedButton(
                             onPressed: () {
-                              navigatorTo(context, EditProfileScreen());
+                              navigatorTo(context, const EditProfileScreen());
                             },
                             child: const Icon(FontAwesomeIcons.penToSquare),
                           ),
                         ],
                       ),
                       CustomMaterialButton(
-                          function: () async {
-                            await AuthCubit.get(context).signOutFromApp();
+                          function: ()  {
+                             AuthCubit.get(context).signOutFromApp();
                             navigatorAndRemove(context, LoginScreen());
                           },
                           text: 'exit'),

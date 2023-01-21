@@ -9,7 +9,6 @@ import 'package:social_app/presentation/screen/authentication/screen/login.dart'
 import 'package:social_app/presentation/screen/authentication/widget/drop_down.dart';
 import 'package:social_app/presentation/screen/authentication/widget/location.dart';
 import 'package:social_app/presentation/screen/authentication/widget/text_register_bar.dart';
-import 'package:social_app/presentation/screen/home/screen/home_screen.dart';
 import 'package:social_app/presentation/shared_widget/custom_form_field.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
 import 'package:social_app/util/strings.dart';
@@ -17,13 +16,13 @@ import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/style.dart';
 
 class SecondStepRegisterScreen extends StatefulWidget {
-  String email;
-  String password;
-  String confirmPassword;
-  String name;
-  String phoneNumber;
+  final String email;
+  final String password;
+  final String confirmPassword;
+  final String name;
+  final String phoneNumber;
 
-  SecondStepRegisterScreen(
+  const SecondStepRegisterScreen(
       {Key? key,
       required this.email,
       required this.password,
@@ -58,10 +57,9 @@ class _SecondStepRegisterScreenState extends State<SecondStepRegisterScreen> {
               textBody: MyStrings.successCreateUser,
               dialogType: DialogType.success,
               textButton: MyStrings.signIn,
-              function: (){
-                navigatorAndRemove(context, LoginScreen());
-              }
-          );
+              function: () {
+                navigatorAndRemove(context, const LoginScreen());
+              });
         }
         if (state is UserRegisterErrorStates) {
           showToast(text: state.error, state: ToastStates.ERROR);
@@ -78,9 +76,8 @@ class _SecondStepRegisterScreenState extends State<SecondStepRegisterScreen> {
             child: Scaffold(
               appBar: AppBar(
                 titleSpacing: 0.0,
-                title:    CustomTextRegisterBar(
-                    text: MyStrings.secondStepRegister
-                ),
+                title:
+                    CustomTextRegisterBar(text: MyStrings.secondStepRegister),
               ),
               body: Form(
                 key: formKey,
@@ -125,6 +122,7 @@ class _SecondStepRegisterScreenState extends State<SecondStepRegisterScreen> {
                         SizedBox(
                           height: 10.h,
                         ),
+
                         ///======TextFormField For Location=====///
                         CustomFormField(
                           text: MyStrings.location,
@@ -176,10 +174,12 @@ class _SecondStepRegisterScreenState extends State<SecondStepRegisterScreen> {
                                               widget.confirmPassword,
                                           city: initialCityValue.trim(),
                                           area: initialAreaValue.trim(),
-                                          location: locationController.text.trim(),
+                                          location:
+                                              locationController.text.trim(),
                                           phoneNumber: widget.phoneNumber,
                                           name: widget.name,
-                                          address: addressController.text.trim());
+                                          address:
+                                              addressController.text.trim());
                                     }
                                   }
                                 },

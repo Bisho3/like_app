@@ -22,8 +22,8 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   await EasyLocalization.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
-  await CacheHelper.init();
   await Firebase.initializeApp();
+  await CacheHelper.init();
   Widget widget;
   var onBoarding = CacheHelper.getData(key: 'onBoarding');
   var token = CacheHelper.getData(key: 'token');
@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
         ),
 
         BlocProvider(
-            create: (BuildContext context) => LogicCubit()..convertToArabicLanguage(context)
+            create: (BuildContext context) => LogicCubit()
         ),
       ],
       child: BlocConsumer<LogicCubit, LogicStates>(

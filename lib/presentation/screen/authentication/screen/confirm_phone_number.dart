@@ -11,35 +11,36 @@ import 'package:social_app/util/strings.dart';
 import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/style.dart';
 
-class ConfrimPhoneNumber extends StatelessWidget {
-  String phoneNumber;
-  ConfrimPhoneNumber({Key? key,required this.phoneNumber}) : super(key: key);
+class ConfirmPhoneNumber extends StatelessWidget {
+  final TextEditingController verificationController = TextEditingController();
+  final TextEditingController pinController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final String phoneNumber;
 
-  TextEditingController verificationController = TextEditingController();
-  TextEditingController pinController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  String? otpCode;
+  ConfirmPhoneNumber({Key? key, required this.phoneNumber}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     AuthCubit cubit = AuthCubit.get(context);
-    return BlocConsumer<AuthCubit ,AuthStates>(
-        listener: (context, state) {
-          if(state is PhoneLoadingStates){
-            showProgressIndicator(context);
-          }
-          if(state is PhoneOTPVerified){
-            Navigator.pop(context);
-            showToast(text: MyStrings.phoneOTPVerified, state: ToastStates.SUCCESS);
-            navigatorAndRemove(context, FirstStepRegisterScreen(phoneNumber: phoneNumber,));
-          }
-          if(state is ErrorOccurred){
-            Navigator.pop(context);
-            String errorMsg = (state).error;
-            showToast(text: errorMsg, state:ToastStates.WARMIMG);
-          }
-        },
-        builder: (context,state) {
+    return BlocConsumer<AuthCubit, AuthStates>(listener: (context, state) {
+      if (state is PhoneLoadingStates) {
+        showProgressIndicator(context);
+      }
+      if (state is PhoneOTPVerified) {
+        Navigator.pop(context);
+        showToast(text: MyStrings.phoneOTPVerified, state: ToastStates.SUCCESS);
+        navigatorAndRemove(
+            context,
+            FirstStepRegisterScreen(
+              phoneNumber: phoneNumber,
+            ));
+      }
+      if (state is ErrorOccurred) {
+        Navigator.pop(context);
+        String errorMsg = (state).error;
+        showToast(text: errorMsg, state: ToastStates.WARMIMG);
+      }
+    }, builder: (context, state) {
       return Scaffold(
         appBar: AppBar(
           title: Center(
@@ -85,7 +86,6 @@ class ConfrimPhoneNumber extends StatelessWidget {
                     },
                     length: 6,
                     onCompleted: (code) {
-                      otpCode = code;
                       print(code);
                     },
                     defaultPinTheme: PinTheme(

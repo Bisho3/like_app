@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:social_app/util/style.dart';
 
 class BlockEditOneItem extends StatelessWidget {
-  String titleText;
-  Widget widget;
-   BlockEditOneItem({Key? key,required this.titleText,required this.widget}) : super(key: key);
+  final String titleText;
+  final Widget widget;
+   const BlockEditOneItem({Key? key,required this.titleText,required this.widget}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

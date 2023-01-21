@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:image_picker/image_picker.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,7 +15,6 @@ import 'package:social_app/presentation/screen/setting/screen/profile_screen.dar
 import 'package:social_app/presentation/screen/users/screen/users_screen.dart';
 import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/sharedpreference.dart';
-import 'package:social_app/util/strings.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class LogicCubit extends Cubit<LogicStates> {
@@ -33,7 +31,6 @@ class LogicCubit extends Cubit<LogicStates> {
     UsersScreen(),
     const SettingsScreen(),
   ];
-
   void changeNavBottom(int index) {
     currentIndex = index;
     if (index == 2) {
@@ -46,7 +43,6 @@ class LogicCubit extends Cubit<LogicStates> {
 
   ///=========== get users ============///
   CreateUser? userModel;
-
   void getUserData() {
     emit(GetUserLoadingStates());
     FirebaseFirestore.instance
@@ -83,13 +79,11 @@ class LogicCubit extends Cubit<LogicStates> {
     await context.setLocale(const Locale("ar", "EG"));
     emit(ConvertToArabicLanguageSuccess());
   }
-
   void convertToEnglishLanguage(BuildContext context) async {
     emit(ConvertLanguageLoading());
     await context.setLocale(const Locale("en", "US"));
     emit(ConvertToEnglishLanguageSuccess());
   }
-
   ///======== Image ==========///
   File? profileImages;
   var picker = ImagePicker();
@@ -99,7 +93,6 @@ class LogicCubit extends Cubit<LogicStates> {
 
     if (selectedImages != null) {
       profileImages = File(selectedImages.path);
-      // uploadProfileImage(image: File(imageFileToProfile!.path));
       emit(GetProfileImageSuccess());
     } else {
       emit(GetProfileImageError());
@@ -107,7 +100,6 @@ class LogicCubit extends Cubit<LogicStates> {
   }
 
   File? coverImage;
-
   Future<void> getCoverImage() async {
     XFile? selectedImages = await picker.pickImage(source: ImageSource.gallery);
 
@@ -118,6 +110,7 @@ class LogicCubit extends Cubit<LogicStates> {
       emit(GetCoverImageError());
     }
   }
+
   void uploadProfileImage() {
     emit(UploadProfileImageLoading());
     firebase_storage.FirebaseStorage.instance
