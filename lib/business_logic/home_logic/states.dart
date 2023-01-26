@@ -1,3 +1,5 @@
+import 'package:social_app/business_logic/home_logic/cubit.dart';
+
 abstract class LogicStates {}
 
 class LogicInitialStates extends LogicStates {}
@@ -61,3 +63,56 @@ class UploadProfileImageError extends LogicStates {}
 class UploadCoverImageLoading extends LogicStates {}
 
 class UploadCoverImageError extends LogicStates {}
+
+///===========post===========///
+
+class GetPostImageSuccess extends LogicStates {}
+
+class GetPostImageError extends LogicStates {}
+
+class CreatePostLoading extends LogicStates {}
+
+class CreatePostSuccess extends LogicStates {}
+
+class CreatePostError extends LogicStates {
+  final String error;
+
+  CreatePostError(this.error);
+}
+
+class RemovePostSuccess extends LogicStates {}
+
+class GetPostLoading extends LogicStates{}
+
+class GetPostSuccess extends LogicStates{}
+
+class GetPostError extends LogicStates{
+  final String error;
+
+  GetPostError(this.error);
+}
+///=========== like post =========///
+class LikePostSuccess extends LogicStates{}
+
+class LikePostError extends LogicStates{
+  final String error;
+
+  LikePostError(this.error);
+}
+///========== comments post ====///
+class CommentPostSuccess extends LogicStates{}
+
+class CommentPostError extends LogicStates{
+  final String error;
+
+  CommentPostError(this.error);
+}
+
+///=========== get all users =============///
+ class GetAllUsersLoading extends LogicStates{}
+class GetAllUsersSuccess extends LogicStates{}
+class GetAllUsersError extends LogicStates{
+  final String error;
+
+  GetAllUsersError(this.error);
+}

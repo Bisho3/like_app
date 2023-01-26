@@ -12,7 +12,7 @@ class ImageProfileAndCover extends StatelessWidget {
   const ImageProfileAndCover(
       {Key? key, this.editCover = false, this.editProfile = false})
       : super(key: key);
- final bool editCover;
+  final bool editCover;
   final bool editProfile;
 
   @override

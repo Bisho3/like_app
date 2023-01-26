@@ -59,7 +59,7 @@
   "chats": "المحادثات",
   "users": "المستخدمين",
   "settings": "الأعدادات",
-  "upload_Post": "منشور جديد",
+  "create_Post": "إنشاء منشور",
   "homeBar": "الصفحة الرئيسية",
   "chatsBar": "المحادثات",
   "usersBar": "المستخدمين",
@@ -91,5 +91,7 @@
   "reset_Password": "إعادة تعيين كلمة المرور",
   "added_Successfully": "تم الأضافة بنجاح",
   "upload_Profile": "تحميل الصورة الشخصية",
-  "upload_Cover": "تحميل صورة الغلاف"
+  "upload_Cover": "تحميل صورة الغلاف",
+  "ask_Post": "فى ماذا تفكر...",
+  "tags": "الأشارات"
 }

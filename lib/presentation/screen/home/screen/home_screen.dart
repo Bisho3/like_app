@@ -4,9 +4,7 @@ import 'package:social_app/business_logic/home_logic/cubit.dart';
 import 'package:social_app/business_logic/home_logic/states.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_app/presentation/screen/home/widget/bottom_nav_bar_item.dart';
-import 'package:social_app/presentation/screen/new_post/screen/new_post_screen.dart';
 import 'package:social_app/util/strings.dart';
-import 'package:social_app/util/helper.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -36,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
             items: [
               bottomNavBarItem(icon: Icons.home_outlined, textLabel: MyStrings.home,),
               bottomNavBarItem(icon: FontAwesomeIcons.commentDots, textLabel: MyStrings.chats,),
-              bottomNavBarItem(icon: Icons.upload_file_outlined, textLabel: MyStrings.uploadPost,),
+              bottomNavBarItem(icon: Icons.upload_file_outlined, textLabel: MyStrings.createPost,),
               bottomNavBarItem(icon: Icons.person_outlined, textLabel: MyStrings.users,),
               bottomNavBarItem(icon: FontAwesomeIcons.gears, textLabel: MyStrings.settings,),
             ],

@@ -47,9 +47,9 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  Widget startWidget;
+ final Widget startWidget;
 
-  MyApp({super.key, required this.startWidget});
+ const MyApp({super.key, required this.startWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) => AuthCubit()
         ),
-
         BlocProvider(
             create: (BuildContext context) => LogicCubit()
         ),

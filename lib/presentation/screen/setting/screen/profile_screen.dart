@@ -53,7 +53,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   padding: EdgeInsets.all(8.h),
                   child: Column(
                     children: [
-                       ImageProfileAndCover(
+                       const ImageProfileAndCover(
                          editCover: false,
                          editProfile: false,
                        ),

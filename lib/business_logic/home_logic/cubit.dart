@@ -8,9 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/business_logic/home_logic/states.dart';
 import 'package:social_app/data/model/authentication/create_user.dart';
+import 'package:social_app/data/model/post/post.dart';
 import 'package:social_app/presentation/screen/chat/screen/chat_screen.dart';
+import 'package:social_app/presentation/screen/create_post/screen/create_post_screen.dart';
 import 'package:social_app/presentation/screen/feed/screen/feed_screen.dart';
-import 'package:social_app/presentation/screen/new_post/screen/new_post_screen.dart';
 import 'package:social_app/presentation/screen/setting/screen/profile_screen.dart';
 import 'package:social_app/presentation/screen/users/screen/users_screen.dart';
 import 'package:social_app/util/helper.dart';
@@ -25,12 +26,13 @@ class LogicCubit extends Cubit<LogicStates> {
 
   int currentIndex = 0;
   List<Widget> screens = [
-    FeedScreen(),
+    const FeedScreen(),
     ChatsScreen(),
-    NewPostScreen(),
+    const CreatePostScreen(),
     UsersScreen(),
     const SettingsScreen(),
   ];
+
   void changeNavBottom(int index) {
     currentIndex = index;
     if (index == 2) {
@@ -43,6 +45,7 @@ class LogicCubit extends Cubit<LogicStates> {
 
   ///=========== get users ============///
   CreateUser? userModel;
+
   void getUserData() {
     emit(GetUserLoadingStates());
     FirebaseFirestore.instance
@@ -79,11 +82,13 @@ class LogicCubit extends Cubit<LogicStates> {
     await context.setLocale(const Locale("ar", "EG"));
     emit(ConvertToArabicLanguageSuccess());
   }
+
   void convertToEnglishLanguage(BuildContext context) async {
     emit(ConvertLanguageLoading());
     await context.setLocale(const Locale("en", "US"));
     emit(ConvertToEnglishLanguageSuccess());
   }
+
   ///======== Image ==========///
   File? profileImages;
   var picker = ImagePicker();
@@ -100,6 +105,7 @@ class LogicCubit extends Cubit<LogicStates> {
   }
 
   File? coverImage;
+
   Future<void> getCoverImage() async {
     XFile? selectedImages = await picker.pickImage(source: ImageSource.gallery);
 
@@ -122,7 +128,7 @@ class LogicCubit extends Cubit<LogicStates> {
         updateCurrentUsers(
           name: userModel?.name,
           bio: userModel?.bio,
-          phoneNumber:userModel?.phoneNumber,
+          phoneNumber: userModel?.phoneNumber,
           byEmail: userModel?.byEmail,
           location: userModel?.location,
           coverImages: userModel?.coverImage,
@@ -152,7 +158,7 @@ class LogicCubit extends Cubit<LogicStates> {
         updateCurrentUsers(
           name: userModel?.name,
           bio: userModel?.bio,
-          phoneNumber:userModel?.phoneNumber,
+          phoneNumber: userModel?.phoneNumber,
           byEmail: userModel?.byEmail,
           location: userModel?.location,
           coverImages: value,
@@ -187,28 +193,162 @@ class LogicCubit extends Cubit<LogicStates> {
     bool? byEmail,
   }) {
     emit(UpdateUserLoadingStates());
-      CreateUser model = CreateUser(
-          name: name,
-          email: userModel?.email,
-          bio: bio,
-          coverImage: coverImages,
-          profileImage: profileImage,
-          phoneNumber: phoneNumber,
-          location: location,
-          city: city,
-          area: area,
-          address: address,
-          uId: userModel?.uId,
-          byEmail: userModel?.byEmail);
-      FirebaseFirestore.instance
-          .collection('users')
-          .doc(userModel?.uId)
-          .update(model.toMap())
-          .then((value) {
-        getUserData();
-      }).catchError((error) {
-        emit(UpdateUserErrorStates(error.toString()));
-      });
+    CreateUser model = CreateUser(
+        name: name,
+        email: userModel?.email,
+        bio: bio,
+        coverImage: coverImages,
+        profileImage: profileImage,
+        phoneNumber: phoneNumber,
+        location: location,
+        city: city,
+        area: area,
+        address: address,
+        uId: userModel?.uId,
+        byEmail: userModel?.byEmail);
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userModel?.uId)
+        .update(model.toMap())
+        .then((value) {
+      getUserData();
+    }).catchError((error) {
+      emit(UpdateUserErrorStates(error.toString()));
+    });
+  }
 
+  ///=========post======///
+  File? postImage;
+
+  Future<void> getPostImage() async {
+    XFile? selectedImages = await picker.pickImage(source: ImageSource.gallery);
+
+    if (selectedImages != null) {
+      postImage = File(selectedImages.path);
+      emit(GetPostImageSuccess());
+    } else {
+      emit(GetPostImageError());
+    }
+  }
+
+  void removePostImage() {
+    postImage = null;
+    emit(RemovePostSuccess());
+  }
+
+  void uploadPostImage({
+    required String dateTime,
+    required String text,
+  }) {
+    emit(CreatePostLoading());
+    firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('posts/${Uri.file(postImage!.path).pathSegments.last}')
+        .putFile(postImage!)
+        .then((value) {
+      value.ref.getDownloadURL().then((value) {
+        createPost(dateTime: dateTime, text: text, postImage: value);
+      }).catchError((error) {
+        emit(CreatePostError(error.toString()));
+      });
+    }).catchError((error) {
+      emit(CreatePostError(error.toString()));
+    });
+  }
+
+  void createPost(
+      {required String dateTime, required String text, String? postImage}) {
+    emit(CreatePostLoading());
+    CreatePost model = CreatePost(
+      name: userModel?.name,
+      uId: userModel?.uId,
+      profileImage: userModel?.profileImage,
+      text: text,
+      dateTime: dateTime,
+      postImage: postImage ?? '',
+    );
+
+    FirebaseFirestore.instance
+        .collection('posts')
+        .add(model.toMap())
+        .then((value) {
+      emit(CreatePostSuccess());
+    }).catchError((error) {
+      emit(CreatePostError(error.toString()));
+    });
+  }
+
+  List<CreatePost> posts = [];
+  List<String> postId = [];
+  List<int> like = [];
+  List<int> numComment = [];
+
+  void getPost() {
+    emit(GetPostLoading());
+    FirebaseFirestore.instance.collection('posts').get().then((value) {
+      for (var element in value.docs) {
+        element.reference
+            .collection('comments')
+            .get()
+            .then((value) {
+              numComment.add(value.docs.length);
+        })
+            .catchError(() {});
+        element.reference.collection('likes').get().then((value) {
+          like.add(value.docs.length);
+          print("Bishoooo ${value.docs.length}");
+          postId.add(element.id);
+          posts.add(CreatePost.fromJson(element.data()));
+          emit(GetPostSuccess());
+        }).catchError((error) {
+          emit(GetPostError(error.toString()));
+        });
+      }
+    }).catchError((error) {
+      emit(GetPostError(error.toString()));
+    });
+  }
+
+  ///=========== likes =======///
+  void likePost(String postId) {
+    FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postId)
+        .collection('likes')
+        .doc(userModel?.uId)
+        .set({'like': true}).then((value) {
+      emit(LikePostSuccess());
+    }).catchError((error) {
+      emit(LikePostError(error.toString()));
+    });
+  }
+
+  ///=======comments =========///
+  void commentPost(String postId, String text) {
+    FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .doc(userModel?.uId)
+        .set({'comment': text}).then((value) {
+      emit(CommentPostSuccess());
+    }).catchError((error) {
+      emit(CommentPostError(error.toString()));
+    });
+  }
+  ///======== get all Users =================///
+
+List<CreateUser> users =[];
+
+  void getAllUsers(){
+    emit(GetAllUsersLoading());
+    FirebaseFirestore.instance.collection('users').get().then((value) {
+      for (var element in value.docs) {
+        users.add(CreateUser.fromJson(element.data()));
+      }
+      emit(GetAllUsersSuccess());
+    }).catchError((error) {
+      emit(GetAllUsersError(error.toString()));
+    });
   }
 }

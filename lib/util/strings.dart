@@ -61,7 +61,7 @@ class MyStrings {
   static String chats = "chats".tr();
   static String users = "users".tr();
   static String settings = "settings".tr();
-  static String uploadPost = "upload_Post".tr();
+  static String createPost = "create_Post".tr();
   static String homeBar = "homeBar".tr();
   static  String communicateWithFriends ="communicate_With_Friends".tr();
   static String comment ="comment".tr();
@@ -90,4 +90,6 @@ class MyStrings {
   static String addedSuccessfully ="added_Successfully".tr();
   static String uploadProfile ="upload_Profile".tr();
   static String uploadCover ="upload_Cover".tr();
+  static String askPost="ask_Post".tr();
+  static String tags="tags".tr();
 }

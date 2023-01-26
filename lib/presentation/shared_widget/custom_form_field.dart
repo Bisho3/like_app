@@ -16,7 +16,6 @@ class CustomFormField extends StatelessWidget {
   final Function? onSubmit;
   final Function? preffixOnPressed;
   final double radius;
-
   final String? initialValue;
   final bool borderOutLine;
 
