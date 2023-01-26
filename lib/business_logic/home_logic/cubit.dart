@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/business_logic/home_logic/states.dart';
 import 'package:social_app/data/model/authentication/create_user.dart';
+import 'package:social_app/data/model/message/message.dart';
 import 'package:social_app/data/model/post/post.dart';
 import 'package:social_app/presentation/screen/chat/screen/chat_screen.dart';
 import 'package:social_app/presentation/screen/create_post/screen/create_post_screen.dart';
@@ -27,9 +28,9 @@ class LogicCubit extends Cubit<LogicStates> {
   int currentIndex = 0;
   List<Widget> screens = [
     const FeedScreen(),
-    ChatsScreen(),
+    const ChatsScreen(),
     const CreatePostScreen(),
-    UsersScreen(),
+    const UsersScreen(),
     const SettingsScreen(),
   ];
 
@@ -287,13 +288,9 @@ class LogicCubit extends Cubit<LogicStates> {
     emit(GetPostLoading());
     FirebaseFirestore.instance.collection('posts').get().then((value) {
       for (var element in value.docs) {
-        element.reference
-            .collection('comments')
-            .get()
-            .then((value) {
-              numComment.add(value.docs.length);
-        })
-            .catchError(() {});
+        element.reference.collection('comments').get().then((value) {
+          numComment.add(value.docs.length);
+        }).catchError(() {});
         element.reference.collection('likes').get().then((value) {
           like.add(value.docs.length);
           print("Bishoooo ${value.docs.length}");
@@ -336,19 +333,81 @@ class LogicCubit extends Cubit<LogicStates> {
       emit(CommentPostError(error.toString()));
     });
   }
+
   ///======== get all Users =================///
 
-List<CreateUser> users =[];
+  List<CreateUser> users = [];
 
-  void getAllUsers(){
+  void getAllUsers() {
     emit(GetAllUsersLoading());
     FirebaseFirestore.instance.collection('users').get().then((value) {
       for (var element in value.docs) {
-        users.add(CreateUser.fromJson(element.data()));
+        if (element.data()['uId'] != userModel?.uId) {
+          users.add(CreateUser.fromJson(element.data()));
+        }
       }
       emit(GetAllUsersSuccess());
     }).catchError((error) {
       emit(GetAllUsersError(error.toString()));
+    });
+  }
+
+  void sendMessage({
+    required String text,
+    required String dateTime,
+    required String receiverId,
+  }) {
+    MessageModel model = MessageModel(
+        text: text,
+        dateTime: dateTime,
+        receiverId: receiverId,
+        senderId: userModel?.uId);
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userModel?.uId)
+        .collection('chats')
+        .doc(receiverId)
+        .collection('messages')
+        .add(model.toMap())
+        .then((value) {
+      emit(SendMessageSuccess());
+    }).catchError((error) {
+      emit(SendMessageError(error.toString()));
+    });
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(receiverId)
+        .collection('chats')
+        .doc(userModel?.uId)
+        .collection('messages')
+        .add(model.toMap())
+        .then((value) {
+      emit(SendMessageSuccess());
+    }).catchError((error) {
+      emit(SendMessageError(error.toString()));
+    });
+  }
+
+  List<MessageModel> messages = [];
+  void getMessage({
+    required String receiverId,
+  }) {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userModel?.uId)
+        .collection('chats')
+        .doc(receiverId)
+        .collection('messages')
+        .orderBy('dateTime')
+        .snapshots()
+        .listen((event) {
+      messages = [];
+      for (var element in event.docs) {
+        messages.add(MessageModel.fromJson(element.data()));
+        print(element.data());
+      }
+      emit(GetMessageSuccess());
     });
   }
 }

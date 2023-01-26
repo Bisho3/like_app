@@ -114,12 +114,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Text('# ${MyStrings.tags}'),
-                      ),
-                    ),
                   ],
                 ),
               ],

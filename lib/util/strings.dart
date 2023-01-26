@@ -91,5 +91,4 @@ class MyStrings {
   static String uploadProfile ="upload_Profile".tr();
   static String uploadCover ="upload_Cover".tr();
   static String askPost="ask_Post".tr();
-  static String tags="tags".tr();
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:social_app/data/model/authentication/create_user.dart';
+import 'package:social_app/presentation/screen/chat/screen/chat_details.dart';
+import 'package:social_app/util/helper.dart';
 
 class GetAllUsers extends StatelessWidget {
 
@@ -11,7 +13,9 @@ class GetAllUsers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        navigatorTo(context, ChatDetailsScreen(userModel: model));
+      },
       child: Padding(
         padding: EdgeInsets.all(15.h),
         child: Row(

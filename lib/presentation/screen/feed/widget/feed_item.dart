@@ -95,33 +95,6 @@ class FeedItem extends StatelessWidget {
                   '${model.text}',
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
-                // Padding(
-                //   padding: EdgeInsets.only(
-                //       bottom: 10.h,
-                //       top: 5.h
-                //   ),
-                //   child: SizedBox(
-                //     width: double.infinity,
-                //     child: Wrap(
-                //       children: [
-                //         Padding(
-                //           padding: EdgeInsetsDirectional.only(
-                //               end: 6.w
-                //           ),
-                //           child: SizedBox(
-                //             height: 25.h,
-                //             child: MaterialButton(
-                //               onPressed: () {},
-                //               minWidth: 1.0,
-                //               padding: EdgeInsets.zero,
-                //               child: Text('#softwar',style:Theme.of(context).textTheme.caption?.copyWith(color: MyColors.primaryColor)),
-                //             ),
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
                 if (model.postImage != '')
                   Padding(
                     padding: EdgeInsetsDirectional.only(top: 15.h),
