@@ -5,7 +5,8 @@ import 'package:social_app/util/style.dart';
 
 class Message extends StatelessWidget {
   final MessageModel model;
-  const Message({Key? key,required this.model}) : super(key: key);
+
+  const Message({Key? key, required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

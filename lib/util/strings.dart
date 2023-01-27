@@ -71,9 +71,7 @@ class MyStrings {
   static String phoneNumberSubmit ="phone_Number_Submit".tr();
   static String loginSuccess ="login_Success".tr();
   static String post ="post".tr();
-  static String photos ="photos".tr();
   static String followers ="followers".tr();
-  static String following ="following".tr();
   static String addPhotos ="addPhotos".tr();
   static String bio ="bio".tr();
   static String forgetPassword = "forget_Password".tr();
@@ -91,4 +89,5 @@ class MyStrings {
   static String uploadProfile ="upload_Profile".tr();
   static String uploadCover ="upload_Cover".tr();
   static String askPost="ask_Post".tr();
+  static String exit ="exit".tr();
 }

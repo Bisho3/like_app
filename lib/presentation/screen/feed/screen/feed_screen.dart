@@ -24,24 +24,25 @@ class _FeedScreenState extends State<FeedScreen> {
     super.initState();
     LogicCubit.get(context).getUserData();
     LogicCubit.get(context).getPost();
-
   }
+
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     LogicCubit.get(context).posts.clear();
   }
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LogicCubit,LogicStates>(
-      listener:(context,state){} ,
-      builder: (context,state){
+    return BlocConsumer<LogicCubit, LogicStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
         return ConditionalBuilder(
           condition: LogicCubit.get(context).posts.isNotEmpty,
-          builder: (context){
+          builder: (context) {
             return WillPopScope(
-              onWillPop: ()async{
+              onWillPop: () async {
                 LogicCubit.get(context).posts.clear();
                 return true;
               },
@@ -61,17 +62,15 @@ class _FeedScreenState extends State<FeedScreen> {
                           alignment: AlignmentDirectional.bottomEnd,
                           children: [
                             CustomNetworkImage(
-                              image:  MyImages.coverImageHome,
+                              image: MyImages.coverImageHome,
                               width: double.infinity,
                               height: 180.h,
                             ),
-
                             Padding(
                               padding: EdgeInsets.all(3.h),
                               child: Text(
                                 MyStrings.communicateWithFriends,
-                                style: Theme
-                                    .of(context)
+                                style: Theme.of(context)
                                     .textTheme
                                     .subtitle1
                                     ?.copyWith(color: MyColors.whiteColor),
@@ -82,15 +81,16 @@ class _FeedScreenState extends State<FeedScreen> {
                       ),
                       ListView.separated(
                         shrinkWrap: true,
-                        physics:const NeverScrollableScrollPhysics(),
-                        itemBuilder:(context, index)=>FeedItem(
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) => FeedItem(
                           model: LogicCubit.get(context).posts[index],
                           index: index,
                         ),
-                        separatorBuilder: (context,index)=>SizedBox(
+                        separatorBuilder: (context, index) => SizedBox(
                           height: 8.h,
                         ),
-                        itemCount: LogicCubit.get(context).posts.length,),
+                        itemCount: LogicCubit.get(context).posts.length,
+                      ),
                       SizedBox(
                         height: 8.h,
                       ),
@@ -100,7 +100,8 @@ class _FeedScreenState extends State<FeedScreen> {
               ),
             );
           },
-          fallback: (context)=>const Center(child: RefreshProgressIndicator()),
+          fallback: (context) =>
+              const Center(child: RefreshProgressIndicator()),
         );
       },
     );

@@ -5,13 +5,8 @@ import 'package:social_app/business_logic/home_logic/cubit.dart';
 import 'package:social_app/business_logic/home_logic/states.dart';
 import 'package:social_app/presentation/screen/create_post/widget/postimage.dart';
 import 'package:social_app/presentation/screen/create_post/widget/profileimage_and_name.dart';
-import 'package:social_app/presentation/screen/feed/screen/feed_screen.dart';
-import 'package:social_app/presentation/screen/home/screen/home_screen.dart';
-import 'package:social_app/presentation/shared_widget/custom_form_field.dart';
 import 'package:social_app/presentation/shared_widget/custom_text_button.dart';
-import 'package:social_app/presentation/shared_widget/network_image.dart';
 import 'package:social_app/util/helper.dart';
-import 'package:social_app/util/images.dart';
 import 'package:social_app/util/strings.dart';
 import 'package:social_app/util/style.dart';
 
@@ -36,8 +31,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<LogicCubit, LogicStates>(
       listener: (context, state) {
-        if(state is CreatePostSuccess){
-          showToast(text: MyStrings.addedSuccessfully, state: ToastStates.SUCCESS);
+        if (state is CreatePostSuccess) {
+          showToast(
+              text: MyStrings.addedSuccessfully, state: ToastStates.SUCCESS);
         }
       },
       builder: (context, state) {
@@ -88,8 +84,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                if (cubit.postImage != null)
-                  const PostImage(),
+                if (cubit.postImage != null) const PostImage(),
                 SizedBox(
                   height: 20.h,
                 ),

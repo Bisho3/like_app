@@ -9,16 +9,15 @@ class ProfileImageAndName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LogicCubit,LogicStates>(
-      listener:(context,state){} ,
-      builder: (context,state){
+    return BlocConsumer<LogicCubit, LogicStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
         LogicCubit cubit = LogicCubit.get(context);
         return Row(
           children: [
             CircleAvatar(
               radius: 25.sp,
-              backgroundImage:
-              NetworkImage("${cubit.userModel?.profileImage}"),
+              backgroundImage: NetworkImage("${cubit.userModel?.profileImage}"),
             ),
             SizedBox(
               width: 10.w,

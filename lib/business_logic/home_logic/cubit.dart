@@ -283,17 +283,18 @@ class LogicCubit extends Cubit<LogicStates> {
   List<String> postId = [];
   List<int> like = [];
   List<int> numComment = [];
+  int? numPost;
 
   void getPost() {
     emit(GetPostLoading());
     FirebaseFirestore.instance.collection('posts').get().then((value) {
+      numPost = value.docs.length;
       for (var element in value.docs) {
         element.reference.collection('comments').get().then((value) {
           numComment.add(value.docs.length);
         }).catchError(() {});
         element.reference.collection('likes').get().then((value) {
           like.add(value.docs.length);
-          print("Bishoooo ${value.docs.length}");
           postId.add(element.id);
           posts.add(CreatePost.fromJson(element.data()));
           emit(GetPostSuccess());
@@ -335,12 +336,13 @@ class LogicCubit extends Cubit<LogicStates> {
   }
 
   ///======== get all Users =================///
-
   List<CreateUser> users = [];
+  int? numFriends;
 
   void getAllUsers() {
     emit(GetAllUsersLoading());
     FirebaseFirestore.instance.collection('users').get().then((value) {
+      numFriends = value.docs.length - 1;
       for (var element in value.docs) {
         if (element.data()['uId'] != userModel?.uId) {
           users.add(CreateUser.fromJson(element.data()));
@@ -390,6 +392,7 @@ class LogicCubit extends Cubit<LogicStates> {
   }
 
   List<MessageModel> messages = [];
+
   void getMessage({
     required String receiverId,
   }) {
@@ -405,7 +408,6 @@ class LogicCubit extends Cubit<LogicStates> {
       messages = [];
       for (var element in event.docs) {
         messages.add(MessageModel.fromJson(element.data()));
-        print(element.data());
       }
       emit(GetMessageSuccess());
     });

@@ -2,7 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
+import 'package:social_app/presentation/shared_widget/network_image.dart';
 import 'package:social_app/util/style.dart';
 
 void navigatorTo(context, widget) => Navigator.push(
@@ -68,4 +68,46 @@ AwesomeDialog alertDialog({
   },
   btnOkText: textButton
 )..show();
+
+
+Future alertDialogNotification({
+  required BuildContext context,
+  required String imageUrl,
+  required String body,
+  required String title,
+})=> AwesomeDialog(
+  context: context ,
+  animType: AnimType.scale,
+  dialogType: DialogType.success,
+  body: Center(
+    child: Column(
+      children: [
+        Padding(
+          padding:  EdgeInsets.symmetric(
+              vertical: 10.h
+          ),
+          child: Text(
+            title,
+            style: Theme.of(context).textTheme.subtitle1?.copyWith(fontSize: 16.sp),
+          ),
+        ),
+        CustomNetworkImage(
+          image:imageUrl ,
+          height: 250.h,
+        ),
+        Padding(
+          padding:  EdgeInsets.symmetric(
+              vertical: 10.h
+          ),
+          child: Text(
+            body,
+            style: Theme.of(context).textTheme.subtitle1?.copyWith(fontSize: 16.sp),
+          ),
+        ),
+      ],
+    ),
+  ),
+  dismissOnTouchOutside: false,
+
+).show();
 

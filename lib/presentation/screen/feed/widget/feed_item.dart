@@ -6,7 +6,6 @@ import 'package:social_app/business_logic/home_logic/cubit.dart';
 import 'package:social_app/business_logic/home_logic/states.dart';
 import 'package:social_app/data/model/post/post.dart';
 import 'package:social_app/util/strings.dart';
-import 'package:social_app/util/images.dart';
 import 'package:social_app/util/style.dart';
 
 class FeedItem extends StatelessWidget {
@@ -14,7 +13,7 @@ class FeedItem extends StatelessWidget {
   final int index;
   final CreatePost model;
 
-   FeedItem({
+  FeedItem({
     Key? key,
     required this.index,
     required this.model,
@@ -65,7 +64,7 @@ class FeedItem extends StatelessWidget {
                             ],
                           ),
                           Text(
-                            '${model.dateTime}',
+                            model.dateTime!,
                             style: Theme.of(context).textTheme.caption,
                           ),
                         ],
@@ -165,9 +164,7 @@ class FeedItem extends StatelessWidget {
                               ],
                             ),
                           ),
-                          onTap: () {
-
-                          },
+                          onTap: () {},
                         ),
                       ),
                     ],
@@ -198,8 +195,8 @@ class FeedItem extends StatelessWidget {
                             child: TextFormField(
                               controller: commentController,
                               decoration: InputDecoration(
-                                  hintText: MyStrings.writeComment,
-                                  border: InputBorder.none,
+                                hintText: MyStrings.writeComment,
+                                border: InputBorder.none,
                               ),
                             ),
                           ),
@@ -248,12 +245,13 @@ class FeedItem extends StatelessWidget {
                           ),
                         ],
                       ),
-                      onTap: (){
-                        if(commentController.text == '' || commentController.text == ' '){
-                        }else{
-                          cubit.commentPost(cubit.postId[index],commentController.text.trim());
+                      onTap: () {
+                        if (commentController.text == '' ||
+                            commentController.text == ' ') {
+                        } else {
+                          cubit.commentPost(cubit.postId[index],
+                              commentController.text.trim());
                         }
-
                       },
                     ),
                   ],

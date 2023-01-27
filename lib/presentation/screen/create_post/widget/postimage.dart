@@ -23,7 +23,7 @@ class PostImage extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.r),
                 image: DecorationImage(
-                    image:Image(image: FileImage(cubit.postImage!.absolute))
+                    image: Image(image: FileImage(cubit.postImage!.absolute))
                         .image),
               ),
             ),

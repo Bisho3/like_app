@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,13 +10,8 @@ import 'package:social_app/presentation/screen/authentication/screen/login.dart'
 import 'package:social_app/presentation/screen/setting/screen/edit_profile.dart';
 import 'package:social_app/presentation/screen/setting/widget/image_profile_and_cover.dart';
 import 'package:social_app/presentation/screen/setting/widget/know_number.dart';
-import 'package:social_app/presentation/screen/setting/widget/icon_image_button.dart';
-import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
-import 'package:social_app/presentation/shared_widget/network_image.dart';
 import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/strings.dart';
-import 'package:social_app/util/images.dart';
-import 'package:social_app/util/style.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -32,7 +25,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     // TODO: implement initState
     LogicCubit.get(context).getUserData();
+    LogicCubit.get(context).getAllUsers();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    LogicCubit.get(context).users.clear();
   }
 
   @override
@@ -42,7 +43,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (context, state) {
         var cubit = LogicCubit.get(context).userModel;
         return ConditionalBuilder(
-          condition: state is! GetUserLoadingStates,
+          condition:
+              state is! GetUserLoadingStates && state is! GetAllUsersLoading,
           builder: (context) {
             return Scaffold(
               appBar: AppBar(
@@ -53,10 +55,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   padding: EdgeInsets.all(8.h),
                   child: Column(
                     children: [
-                       const ImageProfileAndCover(
-                         editCover: false,
-                         editProfile: false,
-                       ),
+                      const ImageProfileAndCover(
+                        editCover: false,
+                        editProfile: false,
+                      ),
                       Text(
                         "${cubit?.name}",
                         style: Theme.of(context).textTheme.bodyText1,
@@ -70,24 +72,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         child: Row(
                           children: [
                             CustomKnownNumberStatus(
-                              number: '100',
+                              number: '${LogicCubit.get(context).numPost}',
                               text: MyStrings.post,
-                              function: () {},
                             ),
                             CustomKnownNumberStatus(
-                              number: '256',
-                              text: MyStrings.photos,
-                              function: () {},
-                            ),
-                            CustomKnownNumberStatus(
-                              number: '1K',
+                              number: '${LogicCubit.get(context).numFriends}',
                               text: MyStrings.followers,
-                              function: () {},
-                            ),
-                            CustomKnownNumberStatus(
-                              number: '10',
-                              text: MyStrings.following,
-                              function: () {},
                             ),
                           ],
                         ),
@@ -96,8 +86,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         children: [
                           Expanded(
                               child: OutlinedButton(
-                            onPressed: () async {},
-                            child: Text(MyStrings.addPhotos),
+                            onPressed: () async {
+                              AuthCubit.get(context).signOutFromApp();
+                              navigatorAndRemove(context, const LoginScreen());
+                            },
+                            child: Text(MyStrings.exit),
                           )),
                           SizedBox(
                             width: 5.w,
@@ -110,12 +103,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         ],
                       ),
-                      CustomMaterialButton(
-                          function: ()  {
-                             AuthCubit.get(context).signOutFromApp();
-                            navigatorAndRemove(context, LoginScreen());
-                          },
-                          text: 'exit'),
                     ],
                   ),
                 ),

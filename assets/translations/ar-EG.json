@@ -72,10 +72,8 @@
   "phone_OTP_Verified": "تم التحقق من رقم الهاتف تابع التسجيل",
   "phone_Number_Submit": "تم أرسال OTP علي رقم الهاتف الخاص بك",
   "login_Success": "مرحبا بك في تطبيق Like. تم الدخول بنجاح",
-  "post": "المنشورات",
-  "photos": "الصور",
+  "post": "نشر",
   "followers": "متابعون",
-  "following": "يتابع",
   "addPhotos": "إضافة الصور",
   "bio": "اكتب السيرة الذاتية...",
   "forget_Password": "هل نسيت كلمة السر؟",
@@ -92,5 +90,6 @@
   "added_Successfully": "تم الأضافة بنجاح",
   "upload_Profile": "تحميل الصورة الشخصية",
   "upload_Cover": "تحميل صورة الغلاف",
-  "ask_Post": "فى ماذا تفكر..."
+  "ask_Post": "فى ماذا تفكر...",
+  "exit": "تسجيل الخروج"
 }

@@ -4,8 +4,9 @@ import 'package:social_app/data/model/message/message.dart';
 import 'package:social_app/util/style.dart';
 
 class MyMessage extends StatelessWidget {
- final MessageModel model;
-  const MyMessage({Key? key,required this.model}) : super(key: key);
+  final MessageModel model;
+
+  const MyMessage({Key? key, required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class MyMessage extends StatelessWidget {
       alignment: AlignmentDirectional.centerEnd,
       child: Container(
         decoration: BoxDecoration(
-          color: MyColors.primaryColor.withOpacity(0.2 ),
+          color: MyColors.primaryColor.withOpacity(0.2),
           borderRadius: BorderRadiusDirectional.only(
             bottomStart: Radius.circular(10.r),
             topStart: Radius.circular(10.r),
@@ -21,8 +22,8 @@ class MyMessage extends StatelessWidget {
           ),
         ),
         padding: EdgeInsets.symmetric(
-            vertical: 5.h,
-            horizontal: 10.w,
+          vertical: 5.h,
+          horizontal: 10.w,
         ),
         child: Text(
           "${model.text}",
@@ -31,4 +32,3 @@ class MyMessage extends StatelessWidget {
     );
   }
 }
-

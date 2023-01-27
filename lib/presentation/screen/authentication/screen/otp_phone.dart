@@ -11,7 +11,6 @@ import 'package:social_app/presentation/shared_widget/custom_material_button.dar
 import 'package:social_app/util/strings.dart';
 import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/images.dart';
-import 'package:social_app/util/style.dart';
 
 class OtpPhoneScreen extends StatelessWidget {
   OtpPhoneScreen({Key? key}) : super(key: key);

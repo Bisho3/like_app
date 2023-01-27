@@ -1,5 +1,7 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
@@ -12,18 +14,44 @@ import 'package:social_app/presentation/screen/home/screen/home_screen.dart';
 import 'package:social_app/presentation/screen/no_internet/no_internet.dart';
 import 'package:social_app/presentation/screen/splash_screen_and_onboarding/screen/onboarding_screen.dart';
 import 'package:social_app/presentation/screen/splash_screen_and_onboarding/screen/splash_screen.dart';
+import 'package:social_app/presentation/shared_widget/network_image.dart';
 import 'package:social_app/util/bloc_observer.dart';
 import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/sharedpreference.dart';
 import 'package:social_app/util/theme/theme.dart';
+
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print(message.data.toString());
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   await EasyLocalization.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
-  await Firebase.initializeApp();
   await CacheHelper.init();
+  await Firebase.initializeApp();
+
+  await FirebaseMessaging.instance.getToken().then((token) {
+    print(token);
+    CacheHelper.saveData(key: "tokenNotification", value: token);
+  });
+
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  print('User granted permission: ${settings.authorizationStatus}');
+
   Widget widget;
   var onBoarding = CacheHelper.getData(key: 'onBoarding');
   var token = CacheHelper.getData(key: 'token');
@@ -35,31 +63,30 @@ void main() async {
   } else {
     widget = const HomeScreen();
   }
-  runApp(
-      EasyLocalization(supportedLocales: const [
-        Locale('ar', 'EG'),
-        Locale('en', 'US'),
-      ],
-        path: 'assets/translations',
-        saveLocale: true,
-        child: MyApp(startWidget: widget),)
-  );
+  runApp(EasyLocalization(
+    supportedLocales: const [
+      Locale('ar', 'EG'),
+      Locale('en', 'US'),
+    ],
+    path: 'assets/translations',
+    saveLocale: true,
+    child: MyApp(startWidget: widget),
+  ));
 }
 
 class MyApp extends StatelessWidget {
- final Widget startWidget;
+  final Widget startWidget;
 
- const MyApp({super.key, required this.startWidget});
+  const MyApp({super.key, required this.startWidget});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-            create: (BuildContext context) => AuthCubit()
+        BlocProvider(create: (BuildContext context) => AuthCubit()
         ),
-        BlocProvider(
-            create: (BuildContext context) => LogicCubit()
+        BlocProvider(create: (BuildContext context) => LogicCubit()
+
         ),
       ],
       child: BlocConsumer<LogicCubit, LogicStates>(
@@ -80,9 +107,11 @@ class MyApp extends StatelessWidget {
                 );
               },
               child: OfflineBuilder(
-                connectivityBuilder: (BuildContext context,
-                    ConnectivityResult connectivity,
-                    Widget child,) {
+                connectivityBuilder: (
+                  BuildContext context,
+                  ConnectivityResult connectivity,
+                  Widget child,
+                ) {
                   final bool connected =
                       connectivity != ConnectivityResult.none;
                   if (connected) {
@@ -92,11 +121,9 @@ class MyApp extends StatelessWidget {
                   }
                 },
                 child: const SizedBox(),
-              )
-          );
+              ));
         },
       ),
     );
   }
 }
-

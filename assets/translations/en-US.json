@@ -73,9 +73,7 @@
   "phone_Number_Submit": "The OTP has been sent to your phone number",
   "login_Success": "Welcome to the like Application. You have logged in successfully",
   "post": "Post",
-  "photos": "Photos",
   "followers": "Followers",
-  "following": "Following",
   "addPhotos": "Add Photos",
   "bio": "Write a bio...",
   "forget_Password": "Forget password?",
@@ -92,5 +90,6 @@
   "added_Successfully" : "Added successfully",
   "upload_Profile": "Upload profile",
   "upload_Cover": "Upload cover",
-  "ask_Post": "What's on your mind ..."
+  "ask_Post": "What's on your mind ...",
+  "exit": "Log out"
 }

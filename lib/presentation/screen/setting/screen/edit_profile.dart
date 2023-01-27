@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,20 +6,44 @@ import 'package:social_app/business_logic/home_logic/cubit.dart';
 import 'package:social_app/business_logic/home_logic/states.dart';
 import 'package:social_app/presentation/screen/setting/widget/about_profile.dart';
 import 'package:social_app/presentation/screen/setting/widget/about_region.dart';
-import 'package:social_app/presentation/screen/setting/widget/icon_image_button.dart';
 import 'package:social_app/presentation/screen/setting/widget/image_profile_and_cover.dart';
 import 'package:social_app/presentation/screen/setting/widget/language.dart';
 import 'package:social_app/presentation/screen/setting/widget/reset_password.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
-import 'package:social_app/presentation/shared_widget/network_image.dart';
 import 'package:social_app/util/helper.dart';
-import 'package:social_app/util/images.dart';
 import 'package:social_app/util/strings.dart';
 import 'package:social_app/util/style.dart';
 
-class EditProfileScreen extends StatelessWidget {
+class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
 
+  @override
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
+}
+
+class _EditProfileScreenState extends State<EditProfileScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    FirebaseMessaging.onMessage.listen((event) {
+      alertDialogNotification(
+        context: context,
+        imageUrl: '${event.notification?.android?.imageUrl}',
+        body: '${event.notification?.body}',
+        title: '${event.notification?.title}',
+      );
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      alertDialogNotification(
+        context: context,
+        imageUrl: '${event.notification?.android?.imageUrl}',
+        body: '${event.notification?.body}',
+        title: '${event.notification?.title}',
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +77,7 @@ class EditProfileScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ImageProfileAndCover(
+                  const ImageProfileAndCover(
                     editCover: true,
                     editProfile: true,
                   ),
@@ -94,29 +119,29 @@ class EditProfileScreen extends StatelessWidget {
                             SizedBox(width: 5.w),
                             if (cubit.coverImage != null)
                               Expanded(
-                                  child: Column(
-                                children: [
-                                  CustomMaterialButton(
-                                    function: () {
-                                      cubit.uploadCoverImage();
-                                    },
-                                    text: MyStrings.uploadCover,
-                                    radius: 10.r,
-                                    borderRadius: MyColors.foreignColor,
-                                    background: MyColors.whiteColor,
-                                    textColor: MyColors.primaryColor,
-                                  ),
-                                  if (state is UploadCoverImageLoading)
-                                    Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 5.h,
-                                        ),
-                                        const LinearProgressIndicator(),
-                                      ],
+                                child: Column(
+                                  children: [
+                                    CustomMaterialButton(
+                                      function: () {
+                                        cubit.uploadCoverImage();
+                                      },
+                                      text: MyStrings.uploadCover,
+                                      radius: 10.r,
+                                      borderRadius: MyColors.foreignColor,
+                                      background: MyColors.whiteColor,
+                                      textColor: MyColors.primaryColor,
                                     ),
-                                ],
-                              ),
+                                    if (state is UploadCoverImageLoading)
+                                      Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 5.h,
+                                          ),
+                                          const LinearProgressIndicator(),
+                                        ],
+                                      ),
+                                  ],
+                                ),
                               ),
                           ],
                         ),
@@ -136,7 +161,7 @@ class EditProfileScreen extends StatelessWidget {
                   userModel?.byEmail == true
                       ? ResetPassword()
                       : const SizedBox(),
-                      const Language(),
+                  const Language(),
                 ],
               ),
             ),
