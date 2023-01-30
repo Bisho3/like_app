@@ -49,6 +49,7 @@ dependencies:
   location_picker_flutter_map: ^1.0.5
   awesome_dialog: ^3.0.2
   hexcolor: ^3.0.1
+
   #firebase
   firebase_core: ^2.4.1
   firebase_auth: ^4.2.5

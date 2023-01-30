@@ -115,7 +115,6 @@ ThemeData darkTheme = ThemeData(
     labelStyle: const TextStyle(
       color: MyColors.greyColor,
     ),
-
   ),
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: ButtonStyle(

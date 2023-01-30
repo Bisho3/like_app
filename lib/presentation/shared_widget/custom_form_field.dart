@@ -98,6 +98,22 @@ class CustomFormField extends StatelessWidget {
                     ),
                   )
                 : null,
+            focusedBorder: LogicCubit.get(context).isDark
+                ? OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: MyColors.primaryColor,
+              ),
+              borderRadius: BorderRadius.circular(
+                radius,
+              ),
+
+            )
+                :  OutlineInputBorder(
+              borderSide:const BorderSide(color: MyColors.lightGrey),
+              borderRadius: BorderRadius.circular(
+                radius,
+              ),
+            ),
             enabledBorder: LogicCubit.get(context).isDark
                 ? OutlineInputBorder(
                     borderSide: const BorderSide(

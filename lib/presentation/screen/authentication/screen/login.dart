@@ -15,6 +15,8 @@ import 'package:social_app/presentation/screen/home/screen/home_screen.dart';
 import 'package:social_app/presentation/shared_widget/custom_form_field.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
 import 'package:social_app/presentation/shared_widget/custom_text_button.dart';
+import 'package:social_app/util/adaptive/adaptive_indicator.dart';
+import 'package:social_app/util/constant.dart';
 import 'package:social_app/util/strings.dart';
 import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/images.dart';
@@ -172,7 +174,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontSize: 16.sp);
                         },
                         fallback: (context) =>
-                            const Center(child: RefreshProgressIndicator()),
+                            Center(child: AdaptiveIndicator(
+                              os: getOs(),
+                            )),
                       ),
                       SizedBox(
                         height: 3.h,

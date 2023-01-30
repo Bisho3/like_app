@@ -6,6 +6,8 @@ import 'package:social_app/business_logic/home_logic/cubit.dart';
 import 'package:social_app/business_logic/home_logic/states.dart';
 import 'package:social_app/presentation/screen/feed/widget/feed_item.dart';
 import 'package:social_app/presentation/shared_widget/network_image.dart';
+import 'package:social_app/util/adaptive/adaptive_indicator.dart';
+import 'package:social_app/util/constant.dart';
 import 'package:social_app/util/strings.dart';
 import 'package:social_app/util/images.dart';
 import 'package:social_app/util/style.dart';
@@ -101,7 +103,9 @@ class _FeedScreenState extends State<FeedScreen> {
             );
           },
           fallback: (context) =>
-              const Center(child: RefreshProgressIndicator()),
+               Center(child: AdaptiveIndicator(
+                 os: getOs(),
+               )),
         );
       },
     );

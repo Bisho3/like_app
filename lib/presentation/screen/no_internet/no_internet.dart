@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
+import 'package:social_app/util/adaptive/adaptive_indicator.dart';
+import 'package:social_app/util/constant.dart';
 import 'package:social_app/util/strings.dart';
 import 'package:social_app/util/images.dart';
 import 'package:social_app/util/style.dart';
@@ -46,7 +48,9 @@ class NoInternetScreen extends StatelessWidget {
             ),
             CustomMaterialButton(
               function: () {
-                const Center(child: RefreshProgressIndicator());
+                Center(child: AdaptiveIndicator(
+                  os: getOs(),
+                ));
               },
               text: MyStrings.tryAgain,
               radius: 10.r,

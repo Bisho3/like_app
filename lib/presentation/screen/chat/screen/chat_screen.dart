@@ -5,6 +5,8 @@ import 'package:social_app/business_logic/home_logic/cubit.dart';
 import 'package:social_app/business_logic/home_logic/states.dart';
 import 'package:social_app/presentation/screen/chat/widget/get_all_user.dart';
 import 'package:social_app/presentation/shared_widget/custom_divider.dart';
+import 'package:social_app/util/adaptive/adaptive_indicator.dart';
+import 'package:social_app/util/constant.dart';
 import 'package:social_app/util/strings.dart';
 
 class ChatsScreen extends StatefulWidget {
@@ -51,7 +53,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
               );
             },
             fallback: (context) =>
-                const Center(child: RefreshProgressIndicator()),
+                Center(child: AdaptiveIndicator(
+                  os: getOs(),
+                )),
           ),
         );
       },

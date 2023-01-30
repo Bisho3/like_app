@@ -13,6 +13,8 @@ import 'package:social_app/presentation/screen/authentication/widget/location.da
 import 'package:social_app/presentation/screen/authentication/widget/text_register_bar.dart';
 import 'package:social_app/presentation/shared_widget/custom_form_field.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
+import 'package:social_app/util/adaptive/adaptive_indicator.dart';
+import 'package:social_app/util/constant.dart';
 import 'package:social_app/util/strings.dart';
 import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/style.dart';
@@ -194,7 +196,9 @@ class _SecondStepRegisterScreenState extends State<SecondStepRegisterScreen> {
                                 fontSize: 16.sp);
                           },
                           fallback: (context) =>
-                              const Center(child: RefreshProgressIndicator()),
+                              Center(child: AdaptiveIndicator(
+                                os: getOs(),
+                              )),
                         ),
                       ],
                     ),

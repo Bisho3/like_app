@@ -5,6 +5,8 @@ import 'package:social_app/business_logic/home_logic/cubit.dart';
 import 'package:social_app/business_logic/home_logic/states.dart';
 import 'package:social_app/presentation/screen/users/widget/GetAllUsers.dart';
 import 'package:social_app/presentation/shared_widget/custom_divider.dart';
+import 'package:social_app/util/adaptive/adaptive_indicator.dart';
+import 'package:social_app/util/constant.dart';
 import 'package:social_app/util/strings.dart';
 
 class UsersScreen extends StatelessWidget {
@@ -30,7 +32,9 @@ class UsersScreen extends StatelessWidget {
                 itemCount: cubit.users.length,
               );
             },
-            fallback: (context)=> const Center(child: RefreshProgressIndicator()),
+            fallback: (context)=>Center(child: AdaptiveIndicator(
+              os: getOs(),
+            )),
           ),
         );
       },

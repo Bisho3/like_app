@@ -5,6 +5,7 @@ import 'package:social_app/business_logic/home_logic/cubit.dart';
 import 'package:social_app/business_logic/home_logic/states.dart';
 import 'package:social_app/presentation/screen/create_post/widget/postimage.dart';
 import 'package:social_app/presentation/screen/create_post/widget/profileimage_and_name.dart';
+import 'package:social_app/presentation/screen/home/screen/home_screen.dart';
 import 'package:social_app/presentation/shared_widget/custom_text_button.dart';
 import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/strings.dart';
@@ -34,6 +35,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         if (state is CreatePostSuccess) {
           showToast(
               text: MyStrings.addedSuccessfully, state: ToastStates.SUCCESS);
+          LogicCubit.get(context).currentIndex=0;
         }
       },
       builder: (context, state) {

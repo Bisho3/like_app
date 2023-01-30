@@ -7,6 +7,8 @@ import 'package:social_app/business_logic/authentication_logic/cubit.dart';
 import 'package:social_app/business_logic/authentication_logic/states.dart';
 import 'package:social_app/presentation/shared_widget/custom_form_field.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
+import 'package:social_app/util/adaptive/adaptive_indicator.dart';
+import 'package:social_app/util/constant.dart';
 import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/images.dart';
 import 'package:social_app/util/strings.dart';
@@ -82,7 +84,9 @@ class ResetPasswordScreen extends StatelessWidget {
                               fontSize: 16.sp);
                         },
                         fallback: (context) =>
-                            const Center(child: RefreshProgressIndicator()),
+                            Center(child: AdaptiveIndicator(
+                              os: getOs(),
+                            )),
                       ),
                     ],
                   ),

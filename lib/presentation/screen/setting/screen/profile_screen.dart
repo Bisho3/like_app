@@ -10,6 +10,8 @@ import 'package:social_app/presentation/screen/authentication/screen/login.dart'
 import 'package:social_app/presentation/screen/setting/screen/edit_profile.dart';
 import 'package:social_app/presentation/screen/setting/widget/image_profile_and_cover.dart';
 import 'package:social_app/presentation/screen/setting/widget/know_number.dart';
+import 'package:social_app/util/adaptive/adaptive_indicator.dart';
+import 'package:social_app/util/constant.dart';
 import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/strings.dart';
 
@@ -110,7 +112,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             );
           },
           fallback: (context) =>
-              const Center(child: RefreshProgressIndicator()),
+              Center(child: AdaptiveIndicator(
+                os: getOs(),
+              )),
         );
       },
     );
