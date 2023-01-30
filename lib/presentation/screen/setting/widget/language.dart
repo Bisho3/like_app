@@ -55,7 +55,7 @@ class Language extends StatelessWidget {
               ],
             ),
             fallback: (context) =>
-                const Center(child: RefreshProgressIndicator()),
+            const Center(child: RefreshProgressIndicator()),
           ),
         );
       },

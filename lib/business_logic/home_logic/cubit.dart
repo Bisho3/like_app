@@ -44,6 +44,33 @@ class LogicCubit extends Cubit<LogicStates> {
     }
   }
 
+  ///============== convert language AND Dark Mode ========///
+  void convertToArabicLanguage(BuildContext context) async {
+    emit(ConvertLanguageLoading());
+    await context.setLocale(const Locale("ar", "EG"));
+    emit(ConvertToArabicLanguageSuccess());
+  }
+
+  void convertToEnglishLanguage(BuildContext context) async {
+    emit(ConvertLanguageLoading());
+    await context.setLocale(const Locale("en", "US"));
+    emit(ConvertToEnglishLanguageSuccess());
+  }
+
+  bool isDark = false;
+
+  void changeAppMode({bool? isDarkBeNull}) {
+    if (isDarkBeNull != null) {
+      isDark = isDarkBeNull;
+      emit(AppChangeModeState());
+    } else {
+      isDark = !isDark;
+      CacheHelper.saveData(key: 'isDark', value: isDark).then((value) {
+        emit(AppChangeModeState());
+      });
+    }
+  }
+
   ///=========== get users ============///
   CreateUser? userModel;
 
@@ -75,19 +102,6 @@ class LogicCubit extends Cubit<LogicStates> {
       showToast(text: error.toString(), state: ToastStates.ERROR);
       emit(ResetPasswordFail(error.toString()));
     });
-  }
-
-  ///============== convert language ========///
-  void convertToArabicLanguage(BuildContext context) async {
-    emit(ConvertLanguageLoading());
-    await context.setLocale(const Locale("ar", "EG"));
-    emit(ConvertToArabicLanguageSuccess());
-  }
-
-  void convertToEnglishLanguage(BuildContext context) async {
-    emit(ConvertLanguageLoading());
-    await context.setLocale(const Locale("en", "US"));
-    emit(ConvertToEnglishLanguageSuccess());
   }
 
   ///======== Image ==========///

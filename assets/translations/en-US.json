@@ -11,7 +11,7 @@
   "empty_Password": "Password is required",
   "signIn": "Sign In",
   "don't_have_account": "Don't have an account?",
-  "create_Account_Now": "Create an account now",
+  "create_Account_Now": "Create an account",
   "or_continue_with": "OR Continue With",
   "empty_PhoneNumber": "Phone number required",
   "less_Validate_PhoneNumber": "The phone number must be at least 11",
@@ -29,9 +29,6 @@
   "name": "Name",
   "confirm_Password": "Confirm Password",
   "agree": "I agree to",
-  "terms_And_Condition": "The Terms and Condition",
-  "and": "and",
-  "policies": "Policies",
   "empty_Name": "Name is required",
   "error_Email": "Error in mail format",
   "min_Length_Validation_Password": "The password must consist of at least 8 numbers ",
@@ -49,7 +46,6 @@
   "empty_City": "County is required",
   "empty_Area": "Region is required",
   "completed_Registration": "Completed Registration",
-  "do_Not_Agree_Terms": "You must agree to the terms and conditions",
   "error_Create_User": "There is a field already registered, please review the data",
   "success_Create_User": "You can login now",
   "no_Internet": "The internet is offline",
@@ -91,5 +87,7 @@
   "upload_Profile": "Upload profile",
   "upload_Cover": "Upload cover",
   "ask_Post": "What's on your mind ...",
-  "exit": "Log out"
+  "exit": "Log out",
+  "isDark" : "Dark mode",
+  "titleIsDark": "Display & accessibility"
 }

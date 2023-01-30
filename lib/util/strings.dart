@@ -29,10 +29,6 @@ class MyStrings {
   static String secondStepRegister = "second_Step_Register".tr();
   static String name = "name".tr();
   static String confirmPassword = "confirm_Password".tr();
-  static String agree = "agree".tr();
-  static String termsAndCondition = "terms_And_Condition".tr();
-  static String and = "and".tr();
-  static String policies = "policies".tr();
   static String emptyName = "empty_Name".tr();
   static String errorEmail = "error_Email".tr();
   static String minLengthValidationPassword =
@@ -51,7 +47,6 @@ class MyStrings {
   static String emptyCity ="empty_City".tr();
   static String emptyArea="empty_Area".tr();
   static String completedRegistration="completed_Registration".tr();
-  static String doNotAgreeTerms="do_Not_Agree_Terms".tr();
   static String errorCreateUser ="error_Create_User".tr();
   static String successCreateUser="success_Create_User".tr();
   static String noInternet ="no_Internet".tr();
@@ -90,4 +85,6 @@ class MyStrings {
   static String uploadCover ="upload_Cover".tr();
   static String askPost="ask_Post".tr();
   static String exit ="exit".tr();
+  static String isDark = "isDark".tr();
+  static String titleIsDark ="titleIsDark".tr();
 }

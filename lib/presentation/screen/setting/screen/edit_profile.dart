@@ -2,11 +2,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:social_app/business_logic/home_logic/cubit.dart';
 import 'package:social_app/business_logic/home_logic/states.dart';
 import 'package:social_app/presentation/screen/setting/widget/about_profile.dart';
 import 'package:social_app/presentation/screen/setting/widget/about_region.dart';
 import 'package:social_app/presentation/screen/setting/widget/image_profile_and_cover.dart';
+import 'package:social_app/presentation/screen/setting/widget/isdark_mode.dart';
 import 'package:social_app/presentation/screen/setting/widget/language.dart';
 import 'package:social_app/presentation/screen/setting/widget/reset_password.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
@@ -29,6 +31,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     FirebaseMessaging.onMessage.listen((event) {
       alertDialogNotification(
         context: context,
+        color: LogicCubit.get(context).isDark ?MyColors.whiteColor : HexColor('333739'),
         imageUrl: '${event.notification?.android?.imageUrl}',
         body: '${event.notification?.body}',
         title: '${event.notification?.title}',
@@ -38,6 +41,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
       alertDialogNotification(
         context: context,
+        color: LogicCubit.get(context).isDark ?MyColors.whiteColor : HexColor('333739'),
         imageUrl: '${event.notification?.android?.imageUrl}',
         body: '${event.notification?.body}',
         title: '${event.notification?.title}',
@@ -161,6 +165,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   userModel?.byEmail == true
                       ? ResetPassword()
                       : const SizedBox(),
+                   const IsDark(),
+                  SizedBox(
+                    height: 10.h,
+                  ),
                   const Language(),
                 ],
               ),

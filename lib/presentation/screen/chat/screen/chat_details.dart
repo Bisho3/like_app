@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:social_app/business_logic/home_logic/cubit.dart';
 import 'package:social_app/business_logic/home_logic/states.dart';
 import 'package:social_app/data/model/authentication/create_user.dart';
@@ -30,6 +31,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
     FirebaseMessaging.onMessage.listen((event) {
       alertDialogNotification(
         context: context,
+        color: LogicCubit.get(context).isDark ?MyColors.whiteColor : HexColor('333739'),
         imageUrl: '${event.notification?.android?.imageUrl}',
         body: '${event.notification?.body}',
         title: '${event.notification?.title}',
@@ -39,6 +41,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
       alertDialogNotification(
         context: context,
+        color: LogicCubit.get(context).isDark ?MyColors.whiteColor : HexColor('333739'),
         imageUrl: '${event.notification?.android?.imageUrl}',
         body: '${event.notification?.body}',
         title: '${event.notification?.title}',

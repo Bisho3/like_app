@@ -31,7 +31,6 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   await CacheHelper.init();
   await Firebase.initializeApp();
-
   await FirebaseMessaging.instance.getToken().then((token) {
     print(token);
     CacheHelper.saveData(key: "tokenNotification", value: token);
@@ -55,11 +54,16 @@ void main() async {
   Widget widget;
   var onBoarding = CacheHelper.getData(key: 'onBoarding');
   var token = CacheHelper.getData(key: 'token');
+  bool? isDark = CacheHelper.getData(key: 'isDark');
+  var lang = CacheHelper.getData(key: 'lang');
+  var idLang = CacheHelper.getData(key: 'idLang');
 
+  print("lang ${lang}");
+  print(idLang);
   if (onBoarding == null && token == null) {
     widget = const OnBoardingScreen();
   } else if (onBoarding != null && token == null) {
-    widget = LoginScreen();
+    widget = const LoginScreen();
   } else {
     widget = const HomeScreen();
   }
@@ -70,24 +74,31 @@ void main() async {
     ],
     path: 'assets/translations',
     saveLocale: true,
-    child: MyApp(startWidget: widget),
+    child: MyApp(
+      startWidget: widget,
+      isDark: isDark,
+    ),
   ));
 }
 
 class MyApp extends StatelessWidget {
   final Widget startWidget;
+  final bool? isDark;
 
-  const MyApp({super.key, required this.startWidget});
+  const MyApp(
+      {super.key,
+      required this.startWidget,
+      required this.isDark,
+      });
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (BuildContext context) => AuthCubit()
-        ),
-        BlocProvider(create: (BuildContext context) => LogicCubit()
-
-        ),
+        BlocProvider(create: (BuildContext context) => AuthCubit()),
+        BlocProvider(
+            create: (BuildContext context) => LogicCubit()
+              ..changeAppMode(isDarkBeNull: isDark)),
       ],
       child: BlocConsumer<LogicCubit, LogicStates>(
         listener: (context, state) {},
@@ -103,6 +114,10 @@ class MyApp extends StatelessWidget {
                   locale: context.locale,
                   debugShowCheckedModeBanner: false,
                   theme: lightTheme,
+                  darkTheme: darkTheme,
+                  themeMode: LogicCubit.get(context).isDark
+                      ? ThemeMode.light
+                      : ThemeMode.dark,
                   home: child,
                 );
               },

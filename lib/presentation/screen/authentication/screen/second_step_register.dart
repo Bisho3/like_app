@@ -3,8 +3,10 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:social_app/business_logic/authentication_logic/cubit.dart';
 import 'package:social_app/business_logic/authentication_logic/states.dart';
+import 'package:social_app/business_logic/home_logic/cubit.dart';
 import 'package:social_app/presentation/screen/authentication/screen/login.dart';
 import 'package:social_app/presentation/screen/authentication/widget/drop_down.dart';
 import 'package:social_app/presentation/screen/authentication/widget/location.dart';
@@ -57,6 +59,7 @@ class _SecondStepRegisterScreenState extends State<SecondStepRegisterScreen> {
               textBody: MyStrings.successCreateUser,
               dialogType: DialogType.success,
               textButton: MyStrings.signIn,
+              color: LogicCubit.get(context).isDark ?MyColors.whiteColor : HexColor('333739'),
               function: () {
                 navigatorAndRemove(context, const LoginScreen());
               });

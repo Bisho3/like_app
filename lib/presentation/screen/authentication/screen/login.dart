@@ -5,8 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:social_app/business_logic/authentication_logic/cubit.dart';
 import 'package:social_app/business_logic/authentication_logic/states.dart';
+import 'package:social_app/business_logic/home_logic/cubit.dart';
 import 'package:social_app/presentation/screen/authentication/screen/otp_phone.dart';
 import 'package:social_app/presentation/screen/authentication/screen/reset_password.dart';
 import 'package:social_app/presentation/screen/home/screen/home_screen.dart';
@@ -45,6 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (state is UserLoginSuccessStates) {
           CacheHelper.saveData(key: 'token', value: state.uId).then((value) {
             showToast(text: MyStrings.loginSuccess, state: ToastStates.SUCCESS);
+            LogicCubit.get(context).currentIndex =0;
             navigatorAndRemove(context, const HomeScreen());
           });
         }
@@ -54,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
               textBody: MyStrings.successCreateUser,
               dialogType: DialogType.success,
               textButton: MyStrings.signIn,
+              color: LogicCubit.get(context).isDark ?MyColors.whiteColor : HexColor('333739'),
               function: () {
                 AuthCubit.get(context).userLoginWithGoogle();
               });
@@ -64,6 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
               textBody: MyStrings.successCreateUser,
               dialogType: DialogType.success,
               textButton: MyStrings.signIn,
+              color: LogicCubit.get(context).isDark ?MyColors.whiteColor : HexColor('333739'),
               function: () {
                 AuthCubit.get(context).userLoginWithFacebook();
               });
@@ -135,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 3.h,
                       ),
                       Align(
-                          alignment: Alignment.centerLeft,
+                          alignment: Alignment.centerRight,
                           child: CustomTextButton(
                             function: () {
                               navigatorTo(context, ResetPasswordScreen());
@@ -169,11 +174,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         fallback: (context) =>
                             const Center(child: RefreshProgressIndicator()),
                       ),
-
                       SizedBox(
                         height: 3.h,
                       ),
-
                       ///======== Text & Button Text For input To Register========///
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -182,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             MyStrings.doNotHaveAccount,
                             style: TextStyle(
                               color: MyColors.greyColor,
-                              fontSize: 16.sp,
+                              fontSize: 15.sp,
                             ),
                           ),
                           CustomTextButton(

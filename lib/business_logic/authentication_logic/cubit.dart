@@ -259,6 +259,7 @@ class AuthCubit extends Cubit<AuthStates> {
       password: password,
     )
         .then((value) {
+
       emit(UserLoginSuccessStates(value.user!.uid));
     }).catchError((error) {
       print(error.toString());

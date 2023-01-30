@@ -30,7 +30,7 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  bool notAccept = false;
+
   final passwordValidator = MultiValidator([
     RequiredValidator(errorText: MyStrings.emptyPassword),
     MinLengthValidator(8, errorText: MyStrings.minLengthValidationPassword),
@@ -142,61 +142,13 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
                       ),
 
                       SizedBox(
-                        height: 8.h,
+                        height: 30.h,
                       ),
 
                       ///==== CheckBox & Text & Text Button For Terms & Condition =====///
-                      Row(
-                        children: [
-                          Transform.scale(
-                            scale: 1.w,
-                            child: Checkbox(
-                              activeColor: MyColors.foreignColor,
-                              value: notAccept,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  notAccept = value!;
-                                });
-                              },
-                              shape: const CircleBorder(
-                                  side: BorderSide(
-                                color: Colors.blue,
-                              )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 1.w,
-                          ),
-                          Text(
-                            MyStrings.agree,
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.sp,
-                            ),
-                          ),
-                          CustomTextButton(
-                              function: () {},
-                              text: MyStrings.termsAndCondition,
-                              color: MyColors.primaryColor),
-                          Text(
-                            MyStrings.and,
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.sp,
-                            ),
-                          ),
-                          CustomTextButton(
-                            function: () {},
-                            text: MyStrings.policies,
-                          ),
-                        ],
-                      ),
                       CustomMaterialButton(
                           function: () {
-                            if (formKey.currentState!.validate() &&
-                                notAccept == true) {
+                            if (formKey.currentState!.validate() ) {
                               navigatorTo(
                                   context,
                                   SecondStepRegisterScreen(
@@ -207,10 +159,6 @@ class _FirstStepRegisterScreenState extends State<FirstStepRegisterScreen> {
                                     name: nameController.text.trim(),
                                     phoneNumber: widget.phoneNumber!.trim(),
                                   ));
-                            } else if (notAccept == false) {
-                              showToast(
-                                  text: MyStrings.doNotAgreeTerms,
-                                  state: ToastStates.WARMIMG);
                             }
                           },
                           text: MyStrings.next,

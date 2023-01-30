@@ -23,7 +23,7 @@ class CustomTextButton extends StatelessWidget {
       },
       child: Text(
         text.toUpperCase(),
-        style: TextStyle(fontWeight: fontWeight, color: color, fontSize: 16.sp),
+        style: TextStyle(fontWeight: fontWeight, color: color, fontSize: 15.sp),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
 import 'package:social_app/business_logic/authentication_logic/cubit.dart';
 import 'package:social_app/business_logic/authentication_logic/states.dart';
+import 'package:social_app/business_logic/home_logic/cubit.dart';
 import 'package:social_app/presentation/screen/authentication/screen/fisrst_step_register.dart';
 import 'package:social_app/presentation/screen/authentication/widget/show_progress_phonenum.dart';
 import 'package:social_app/presentation/shared_widget/custom_material_button.dart';
@@ -91,7 +92,9 @@ class ConfirmPhoneNumber extends StatelessWidget {
                     defaultPinTheme: PinTheme(
                       height: 40.h,
                       width: 40.w,
-                      textStyle: TextStyle(fontSize: 17.sp),
+                      textStyle: TextStyle(fontSize: 17.sp,
+                      color: LogicCubit.get(context).isDark ?MyColors.blackColor :MyColors.whiteColor
+                      ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
                           8.0,

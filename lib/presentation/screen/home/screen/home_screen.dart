@@ -1,12 +1,14 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:social_app/business_logic/home_logic/cubit.dart';
 import 'package:social_app/business_logic/home_logic/states.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_app/presentation/screen/home/widget/bottom_nav_bar_item.dart';
 import 'package:social_app/util/helper.dart';
 import 'package:social_app/util/strings.dart';
+import 'package:social_app/util/style.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -23,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     FirebaseMessaging.onMessage.listen((event) {
       alertDialogNotification(
         context: context,
+        color: LogicCubit.get(context).isDark ?MyColors.whiteColor : HexColor('333739'),
         imageUrl: '${event.notification?.android?.imageUrl}',
         body: '${event.notification?.body}',
         title: '${event.notification?.title}',
@@ -32,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
       alertDialogNotification(
         context: context,
+        color: LogicCubit.get(context).isDark ?MyColors.whiteColor : HexColor('333739'),
         imageUrl: '${event.notification?.android?.imageUrl}',
         body: '${event.notification?.body}',
         title: '${event.notification?.title}',

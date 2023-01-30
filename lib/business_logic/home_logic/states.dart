@@ -1,3 +1,5 @@
+import 'package:social_app/business_logic/home_logic/cubit.dart';
+
 abstract class LogicStates {}
 
 class LogicInitialStates extends LogicStates {}
@@ -40,9 +42,9 @@ class ResetPasswordFail extends LogicStates {
 ///===========change language ======///
 class ConvertLanguageLoading extends LogicStates {}
 
-class ConvertToArabicLanguageSuccess extends LogicStates {}
-
 class ConvertToEnglishLanguageSuccess extends LogicStates {}
+
+class ConvertToArabicLanguageSuccess extends LogicStates {}
 
 ///========== images =====///
 
@@ -129,3 +131,6 @@ class SendMessageError extends LogicStates {
 }
 
 class GetMessageSuccess extends LogicStates {}
+
+///================== isDark===========///
+class AppChangeModeState extends LogicStates {}

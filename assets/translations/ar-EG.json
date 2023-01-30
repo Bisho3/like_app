@@ -28,10 +28,6 @@
   "second_Step_Register":"الخطوة الثانية: العنوان و اللوكيشن",
   "name": "الأسم",
   "confirm_Password": "تأكيد كلمة المرور",
-  "agree": "موافق علي",
-  "terms_And_Condition": "الشروط و الاحكام",
-  "and": "و",
-  "policies": "سياسات",
   "empty_Name": "يجب أدخال الأسم",
   "error_Email": "خطا في صيغة البريد",
   "min_Length_Validation_Password": "يجب أن تتكون كلمة المرور من 8 أرقام على الأقل",
@@ -49,7 +45,6 @@
   "empty_City": "يجب أدخال المحافظة",
   "empty_Area": "يجب أدخال المنطقة",
   "completed_Registration": "أتمام التسجيل",
-  "do_Not_Agree_Terms": "يجب الموافقة علي الشروط و الأحكام",
   "error_Create_User": "يوجد فيلد مسجل مسبقا برجاء مراجعة البيانات",
   "success_Create_User": "يمكنك تسجيل الدخول الآن",
   "no_Internet": "الأنترنت غير متصل",
@@ -91,5 +86,7 @@
   "upload_Profile": "تحميل الصورة الشخصية",
   "upload_Cover": "تحميل صورة الغلاف",
   "ask_Post": "فى ماذا تفكر...",
-  "exit": "تسجيل الخروج"
+  "exit": "تسجيل الخروج",
+  "isDark": "الوضع المظلم",
+  "titleIsDark": "العرض و امكانية الوصول"
 }

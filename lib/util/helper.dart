@@ -52,10 +52,12 @@ AwesomeDialog alertDialog({
   required DialogType dialogType,
   required String textButton,
   required Function function,
+  required Color color ,
 })=> AwesomeDialog(
   context: context,
   animType: AnimType.scale,
   dialogType: dialogType,
+  dialogBackgroundColor: color,
   body: Center(
     child: Text(
     textBody,
@@ -70,15 +72,17 @@ AwesomeDialog alertDialog({
 )..show();
 
 
-Future alertDialogNotification({
+Future<dynamic> alertDialogNotification({
   required BuildContext context,
   required String imageUrl,
   required String body,
   required String title,
+  required Color color ,
 })=> AwesomeDialog(
   context: context ,
   animType: AnimType.scale,
   dialogType: DialogType.success,
+  dialogBackgroundColor: color,
   body: Center(
     child: Column(
       children: [

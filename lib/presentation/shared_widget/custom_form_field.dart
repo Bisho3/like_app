@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:social_app/business_logic/home_logic/cubit.dart';
+import 'package:social_app/business_logic/home_logic/states.dart';
+import 'package:social_app/util/style.dart';
 
 class CustomFormField extends StatelessWidget {
   final TextInputType type;
@@ -41,57 +45,78 @@ class CustomFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      keyboardType: type,
-      controller: controller,
-      onFieldSubmitted: (String value) {
-        onFieldSubmit!(value);
-      },
-      validator: (value) {
-        return validate(value);
-      },
-      onTap: () {
-        onTap!();
-      },
-      style: TextStyle(fontSize: 14.sp),
-      initialValue: initialValue,
-      obscureText: isPassword,
-      decoration: InputDecoration(
-        label: Text(
-          text,
+    return BlocConsumer<LogicCubit, LogicStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return TextFormField(
+          keyboardType: type,
+          controller: controller,
+          onFieldSubmitted: (String value) {
+            onFieldSubmit!(value);
+          },
+          validator: (value) {
+            return validate(value);
+          },
+          onTap: () {
+            onTap!();
+          },
           style: TextStyle(fontSize: 14.sp),
-        ),
-        errorStyle: TextStyle(
-          fontSize: 14.sp,
-        ),
-        prefixIcon: Padding(
-          padding: EdgeInsets.only(right: 3.w, bottom: 1.h),
-          child: Icon(
-            preffixIcon,
-            size: 22.w,
-          ),
-        ),
-        suffixIcon: suffixIcon != null
-            ? Padding(
-                padding: EdgeInsets.only(left: 1.w, bottom: 1.h),
-                child: IconButton(
-                    icon: Icon(
-                      suffixIcon,
-                      size: 22.w,
+          initialValue: initialValue,
+          obscureText: isPassword,
+          decoration: InputDecoration(
+            label: Text(
+              text,
+              style: TextStyle(fontSize: 14.sp),
+            ),
+            errorStyle: TextStyle(
+              fontSize: 14.sp,
+            ),
+            prefixIcon: Padding(
+              padding: EdgeInsets.only(right: 3.w, bottom: 1.h),
+              child: Icon(
+                preffixIcon,
+                size: 22.w,
+              ),
+            ),
+            suffixIcon: suffixIcon != null
+                ? Padding(
+                    padding: EdgeInsets.only(left: 1.w, bottom: 1.h),
+                    child: IconButton(
+                        icon: Icon(
+                          suffixIcon,
+                          size: 22.w,
+                        ),
+                        onPressed: () {
+                          suffixOnPressed!();
+                        }),
+                  )
+                : null,
+            border: borderOutLine
+                ? OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      radius,
                     ),
-                    onPressed: () {
-                      suffixOnPressed!();
-                    }),
-              )
-            : null,
-        border: borderOutLine
-            ? OutlineInputBorder(
-                borderRadius: BorderRadius.circular(
-                  radius,
-                ),
-              )
-            : null,
-      ),
+                  )
+                : null,
+            enabledBorder: LogicCubit.get(context).isDark
+                ? OutlineInputBorder(
+                    borderSide: const BorderSide(
+                    color: MyColors.greyColor,
+                  ),
+              borderRadius: BorderRadius.circular(
+                radius,
+              ),
+
+            )
+                :  OutlineInputBorder(
+                    borderSide:const BorderSide(color: MyColors.lightGrey),
+              borderRadius: BorderRadius.circular(
+                radius,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
