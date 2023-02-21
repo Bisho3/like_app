@@ -271,8 +271,11 @@ class LogicCubit extends Cubit<LogicStates> {
     });
   }
 
-  void createPost(
-      {required String dateTime, required String text, String? postImage}) {
+  void createPost({
+    required String dateTime,
+    required String text,
+    String? postImage,
+  }) {
     emit(CreatePostLoading());
     CreatePost model = CreatePost(
       name: userModel?.name,

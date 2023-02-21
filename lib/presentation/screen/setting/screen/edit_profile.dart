@@ -31,7 +31,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     FirebaseMessaging.onMessage.listen((event) {
       alertDialogNotification(
         context: context,
-        color: LogicCubit.get(context).isDark ?MyColors.whiteColor : HexColor('333739'),
+        color: LogicCubit
+            .get(context)
+            .isDark ? MyColors.whiteColor : HexColor('333739'),
         imageUrl: '${event.notification?.android?.imageUrl}',
         body: '${event.notification?.body}',
         title: '${event.notification?.title}',
@@ -41,7 +43,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
       alertDialogNotification(
         context: context,
-        color: LogicCubit.get(context).isDark ?MyColors.whiteColor : HexColor('333739'),
+        color: LogicCubit
+            .get(context)
+            .isDark ? MyColors.whiteColor : HexColor('333739'),
         imageUrl: '${event.notification?.android?.imageUrl}',
         body: '${event.notification?.body}',
         title: '${event.notification?.title}',
@@ -165,7 +169,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   userModel?.byEmail == true
                       ? ResetPassword()
                       : const SizedBox(),
-                   const IsDark(),
+                  const IsDark(),
                   SizedBox(
                     height: 10.h,
                   ),

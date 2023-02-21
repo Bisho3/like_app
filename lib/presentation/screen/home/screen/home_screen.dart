@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
         imageUrl: '${event.notification?.android?.imageUrl}',
         body: '${event.notification?.body}',
         title: '${event.notification?.title}',
+       
       );
     });
 

@@ -37,7 +37,7 @@ class ConfirmPhoneNumber extends StatelessWidget {
             ));
       }
       if (state is ErrorOccurred) {
-        Navigator.pop(context);
+       // Navigator.pop(context);
         String errorMsg = (state).error;
         showToast(text: errorMsg, state: ToastStates.WARMIMG);
       }

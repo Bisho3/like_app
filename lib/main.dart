@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ import 'package:social_app/util/theme/theme.dart';
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print(message.data.toString());
 }
-
+// late String initialScreen;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
@@ -29,6 +30,13 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   await CacheHelper.init();
   await Firebase.initializeApp();
+  // FirebaseAuth.instance.authStateChanges().listen((user) {
+  //   if(user == null){
+  //     initialScreen = loginScreen();
+  //   }else{
+  //     initialScreen = mapScreen();
+  //   }
+  // });
   await FirebaseMessaging.instance.getToken().then((token) {
     print(token);
     CacheHelper.saveData(key: "tokenNotification", value: token);

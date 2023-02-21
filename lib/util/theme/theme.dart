@@ -105,6 +105,8 @@ ThemeData darkTheme = ThemeData(
   iconTheme: const IconThemeData(
     color: MyColors.whiteColor,
   ),
+
+
   inputDecorationTheme:  InputDecorationTheme(
     hintStyle: TextStyle(
       color: MyColors.lightGrey ,
@@ -116,6 +118,7 @@ ThemeData darkTheme = ThemeData(
       color: MyColors.greyColor,
     ),
   ),
+
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: ButtonStyle(
       backgroundColor: MaterialStateProperty.all(MyColors.lightGrey)
